@@ -1,4 +1,45 @@
 .btn {
-  color: red;
-  background-color: var(--color-player1);
+  background-color: var(--color-white);
+  width: 40rem;
+  height: 7rem;
+  border: 3px solid var(--color-black);
+  border-radius: 20px;
+  box-shadow: 0px 10px 0px 0px #000;
+  transition: all 0.2s ease-in-out;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 3.1rem;
+  padding: 1.5rem;
+  padding-left: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    box-shadow: 0px 10px 0px 0px var(--color-accent);
+    border: 3px solid var(--color-accent);
+  }
+
+  &--red,
+  &--yellow {
+    color: var(--color-white);
+  }
+
+  &--red {
+    background-color: var(--color-red);
+  }
+  &--yellow {
+    background-color: var(--color-yellow);
+  }
+
+  &--check {
+    background-image: url('../assets/images/icon-check.svg');
+    height: 6.4rem;
+    width: 6.4rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
 }
