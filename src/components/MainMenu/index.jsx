@@ -1,37 +1,26 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import Panel from '../Panel';
+import Logo from '../../assets/images/logo.svg?react';
+import Pvp from '../../assets/images/player-vs-player.svg?react';
 import './style.scss';
+import Button from '../Button';
 
-function Button({ children, className, red, yellow, small, check }) {
-  const classes = classNames(
-    'btn',
-    {
-      'btn--red': red,
-      'btn--yellow': yellow,
-      'btn--check': check,
-      'btn--small': small,
-    },
-    className
+function MainMenu() {
+  return (
+    <Panel className="mainmenu">
+      <div className="mainmenu_container">
+        <Logo className="logo mainmenu_logo" />
+        <div className="mainmenu_options">
+          <Button yellow className="mainmenu_option mainmenu_option--pvp">
+            <span>Player vs player</span>
+            <Pvp className="mainmenu__option__icon" />
+          </Button>
+          <Button className="mainmenu_option mainmenu_option--rules">
+            GAME RULES
+          </Button>
+        </div>
+      </div>
+    </Panel>
   );
-  return <button className={classes}>{check || children}</button>;
 }
 
-Button.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  red: PropTypes.bool,
-  yellow: PropTypes.bool,
-  check: PropTypes.bool,
-  small: PropTypes.bool,
-  checkVariation: ({ red, yellow, small }) => {
-    const count = Number(!!red + !!yellow + !!small);
-    if (count > 1)
-      return new Error('Only one of red, yellow or small can be true');
-  },
-  checkChildren: ({ check, children }) => {
-    if (!check && !children)
-      return new Error('Must have children if not check');
-  },
-};
-
-export default Button;
+export default MainMenu;
