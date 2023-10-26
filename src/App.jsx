@@ -1,11 +1,17 @@
 import Button from './components/Button';
 import MainMenu from './components/MainMenu';
+import PauseMenu from './components/PauseMenu';
 
 function App() {
   return (
     <>
       <div>
         <MainMenu />
+      </div>
+      <br />
+      <br />
+      <div>
+        <PauseMenu />
       </div>
       <br />
       <br />
