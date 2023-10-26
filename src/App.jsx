@@ -1,5 +1,5 @@
 import Button from './components/Button';
-import MenuPanel from './components/MenuPanel';
+import Panel from './components/Panel';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <h4>Heading (XS)</h4>
       </div>
       <div>
-        <MenuPanel>Hello</MenuPanel>
+        <Panel>Hello</Panel>
       </div>
     </>
   );
