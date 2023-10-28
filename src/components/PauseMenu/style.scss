@@ -1,0 +1,22 @@
+.pausemenu {
+  padding: 5rem 4rem;
+  background: var(--color-accent);
+
+  &__title {
+    color: var(--color-white);
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__options {
+    margin-top: 6.4rem;
+  }
+
+  &__option:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}

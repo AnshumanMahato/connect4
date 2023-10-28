@@ -4,7 +4,6 @@ import App from './App';
 import './index.scss';
 
 const el = document.getElementById('root');
-document.getElementsByTagName('title')[0].innerText = 'Connect 4';
 
 const root = ReactDOM.createRoot(el);
 
