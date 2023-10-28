@@ -1,6 +1,7 @@
 import Button from './components/Button';
 import MainMenu from './components/MainMenu';
 import PauseMenu from './components/PauseMenu';
+import Rules from './components/Rules';
 
 function App() {
   return (
@@ -12,6 +13,11 @@ function App() {
       <br />
       <div>
         <PauseMenu />
+      </div>
+      <br />
+      <br />
+      <div>
+        <Rules />
       </div>
       <br />
       <br />

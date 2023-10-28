@@ -1,37 +1,45 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import Button from '../Button';
+import Panel from '../Panel';
 import './style.scss';
 
-function Button({ children, className, red, yellow, small, check }) {
-  const classes = classNames(
-    'btn',
-    {
-      'btn--red': red,
-      'btn--yellow': yellow,
-      'btn--check': check,
-      'btn--small': small,
-    },
-    className
+function Rules() {
+  return (
+    <Panel className="rules">
+      <div className="rules__container">
+        <h1 className="rules__title">RULES</h1>
+        <section className="rules__section">
+          <h3 className="rules__heading">OBJECTIVE</h3>
+          <div className="rules__description">
+            <p>
+              Be the first player to connect 4 of the same colored discs in a
+              row (either vertically, horizontally, or diagonally).
+            </p>
+          </div>
+        </section>
+        <section className="rules__section">
+          <h3 className="rules__heading">HOW TO PLAY</h3>
+          <div className="rules__description">
+            <ul className="rules__list">
+              <li className="rules__rule">Red goes first in the first game.</li>
+              <li className="rules__rule">
+                Players must alternate turns, and only one disc can be dropped
+                in each turn.
+              </li>
+              <li className="rules__rule">
+                The game ends when there is a 4-in-a-row or a stalemate.
+              </li>
+              <li className="rules__rule">
+                The starter of the previous game goes second on the next game.
+              </li>
+            </ul>
+          </div>
+        </section>
+        <Button red check className="rules__close">
+          Back
+        </Button>
+      </div>
+    </Panel>
   );
-  return <button className={classes}>{check || children}</button>;
 }
 
-Button.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  red: PropTypes.bool,
-  yellow: PropTypes.bool,
-  check: PropTypes.bool,
-  small: PropTypes.bool,
-  checkVariation: ({ red, yellow, small }) => {
-    const count = Number(!!red + !!yellow + !!small);
-    if (count > 1)
-      return new Error('Only one of red, yellow or small can be true');
-  },
-  checkChildren: ({ check, children }) => {
-    if (!check && !children)
-      return new Error('Must have children if not check');
-  },
-};
-
-export default Button;
+export default Rules;

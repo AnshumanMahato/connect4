@@ -1,82 +1,49 @@
-.btn {
-  background-color: var(--color-white);
+.rules {
+  padding: 3rem 3.4rem 2.4rem;
+  width: 48rem;
+  position: relative;
 
-  width: 40rem;
-  height: 7rem;
-  padding: 1.5rem;
-  padding-left: 2rem;
-
-  border: 3px solid var(--color-black);
-  border-radius: 20px;
-  box-shadow: 0px 10px 0px 0px #000;
-  transition: all 0.1s ease-in-out;
-
-  font-family: inherit;
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 3.1rem;
-  text-transform: uppercase;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    box-shadow: 0px 10px 0px 0px var(--color-accent);
-    border: 3px solid var(--color-accent);
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  &--red,
-  &--yellow,
-  &--small {
-    color: var(--color-white);
+  &__title {
+    margin-bottom: 3rem;
   }
 
-  &--red {
-    background-color: var(--color-red);
+  &__section {
+    margin-bottom: 3.2rem;
   }
 
-  &--yellow {
-    background-color: var(--color-yellow);
+  &__heading {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
   }
 
-  &--small {
-    background-color: var(--color-accent);
+  &__list {
+    list-style: decimal;
+    padding-left: 1.6rem;
+  }
 
-    width: 8.5rem;
-    height: 4rem;
-    padding: 1rem 2rem;
+  &__rule {
+    padding-left: 0.5rem;
 
-    font-size: 1.6rem;
-    font-weight: 700;
-    line-height: 2.1rem;
+    &::marker {
+      font-weight: 700;
+    }
 
-    border: none;
-    box-shadow: none;
-
-    transition: all 0.1s ease-in-out;
-
-    &:hover {
-      background-color: var(--color-red);
-      border: none;
-      box-shadow: none;
+    &:not(:last-child) {
+      margin-bottom: 1.2rem;
     }
   }
 
-  &--check {
-    height: 6.4rem;
-    width: 6.4rem;
-    border-radius: 50%;
-
-    background-image: url('../assets/images/icon-check.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
-
-    box-shadow: 0px 5px 0px 0px #000;
-
-    &:hover {
-      box-shadow: 0px 5px 0px 0px var(--color-accent);
-    }
+  &__close {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
   }
 }
