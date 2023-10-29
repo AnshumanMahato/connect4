@@ -2,6 +2,7 @@ import Button from './components/Button';
 import MainMenu from './components/MainMenu';
 import PauseMenu from './components/PauseMenu';
 import Rules from './components/Rules';
+import ScoreCard from './components/ScoreCard';
 
 function App() {
   return (
@@ -18,6 +19,11 @@ function App() {
       <br />
       <div>
         <Rules />
+      </div>
+      <br />
+      <br />
+      <div>
+        <ScoreCard player={2} />
       </div>
       <br />
       <br />
