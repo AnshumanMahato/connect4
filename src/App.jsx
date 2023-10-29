@@ -23,7 +23,7 @@ function App() {
       <br />
       <br />
       <div>
-        <ScoreCard player={2} />
+        <ScoreCard player="sel" score={12} />
       </div>
       <br />
       <br />
