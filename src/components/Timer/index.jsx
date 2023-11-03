@@ -11,23 +11,15 @@ function Timer({ player }) {
   const interval = useRef(null);
 
   useEffect(() => {
-    if (time === 0) {
-      clearInterval(interval.current);
-    }
-    console.log(interval.current);
-    if (!interval.current) {
-      console.log('timer started');
-      interval.current = setInterval(() => {
-        console.log('timer tick');
-        setTime((time) => time - 1);
-      }, 1000);
-    }
+    interval.current = setTimeout(() => {
+      if (time === 0) {
+        clearTimeout(interval.current);
+        return;
+      }
+      setTime((currTime) => currTime - 1);
+    }, 1000);
 
-    return () => {
-      clearInterval(interval.current);
-      interval.current = null;
-      console.log('timer cleared');
-    };
+    return () => clearTimeout(interval.current);
   }, [time]);
 
   let timerTitle, TimerBackground;
