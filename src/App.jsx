@@ -1,6 +1,7 @@
 import Button from './components/Button';
 import MainMenu from './components/MainMenu';
 import PauseMenu from './components/PauseMenu';
+import Result from './components/Result';
 import Rules from './components/Rules';
 import ScoreCard from './components/ScoreCard';
 import Timer from './components/Timer';
@@ -30,6 +31,11 @@ function App() {
       <br />
       <div>
         <Timer player="player1" />
+      </div>
+      <br />
+      <br />
+      <div>
+        <Result winner="player1" />
       </div>
       <br />
       <br />

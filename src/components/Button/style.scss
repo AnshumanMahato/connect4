@@ -16,6 +16,7 @@
   font-weight: 700;
   line-height: 3.1rem;
   text-transform: uppercase;
+  white-space: nowrap;
 
   display: flex;
   justify-content: center;
@@ -42,7 +43,7 @@
   &--small {
     background-color: var(--color-accent);
 
-    width: 8.5rem;
+    width: min-content;
     height: 4rem;
     padding: 1rem 2rem;
 

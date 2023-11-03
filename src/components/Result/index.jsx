@@ -1,37 +1,41 @@
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import Panel from '../Panel';
+import Button from '../Button';
 import './style.scss';
 
-function Button({ children, className, red, yellow, small, check }) {
-  const classes = classNames(
-    'btn',
-    {
-      'btn--red': red,
-      'btn--yellow': yellow,
-      'btn--check': check,
-      'btn--small': small,
-    },
-    className
+function Result({ winner }) {
+  let winnerTitle;
+  switch (winner) {
+    case 'player1':
+      winnerTitle = 'Player 1';
+      break;
+    case 'player2':
+      winnerTitle = 'Player 2';
+      break;
+    case 'self':
+      winnerTitle = 'You';
+      break;
+    case 'cpu':
+      winnerTitle = 'CPU';
+      break;
+    default:
+      winnerTitle = 'Invalid';
+  }
+  return (
+    <Panel className="result">
+      <div className="result__container">
+        <h4 className="result__winner">{winnerTitle}</h4>
+        <span className="result__win-text">WINS</span>
+        <Button small>
+          <span>Play Again</span>
+        </Button>
+      </div>
+    </Panel>
   );
-  return <button className={classes}>{check || children}</button>;
 }
 
-Button.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  red: PropTypes.bool,
-  yellow: PropTypes.bool,
-  check: PropTypes.bool,
-  small: PropTypes.bool,
-  checkVariation: ({ red, yellow, small }) => {
-    const count = Number(!!red + !!yellow + !!small);
-    if (count > 1)
-      return new Error('Only one of red, yellow or small can be true');
-  },
-  checkChildren: ({ check, children }) => {
-    if (!check && !children)
-      return new Error('Must have children if not check');
-  },
+Result.propTypes = {
+  winner: PropTypes.oneOf(['player1', 'player2', 'self', 'cpu']).isRequired,
 };
 
-export default Button;
+export default Result;
