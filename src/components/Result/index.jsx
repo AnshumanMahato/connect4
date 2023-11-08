@@ -26,9 +26,7 @@ function Result({ winner }) {
       <div className="result__container">
         <h4 className="result__winner">{winnerTitle}</h4>
         <span className="result__win-text">WINS</span>
-        <Button small>
-          <span>Play Again</span>
-        </Button>
+        <Button small>Play Again</Button>
       </div>
     </Panel>
   );
