@@ -2,7 +2,15 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function Button({ children, className, red, yellow, small, check }) {
+function Button({
+  children,
+  className,
+  red,
+  yellow,
+  small,
+  check,
+  onClick: handleClick,
+}) {
   const classes = classNames(
     'btn',
     {
@@ -13,7 +21,11 @@ function Button({ children, className, red, yellow, small, check }) {
     },
     className
   );
-  return <button className={classes}>{check || children}</button>;
+  return (
+    <button className={classes} onClick={handleClick}>
+      {check || children}
+    </button>
+  );
 }
 
 Button.propTypes = {
@@ -23,6 +35,7 @@ Button.propTypes = {
   yellow: PropTypes.bool,
   check: PropTypes.bool,
   small: PropTypes.bool,
+  onClick: PropTypes.func,
   checkVariation: ({ red, yellow, small }) => {
     const count = Number(!!red + !!yellow + !!small);
     if (count > 1)
