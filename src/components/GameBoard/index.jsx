@@ -12,7 +12,10 @@ function GameBoard({ className }) {
       {[0, 1, 2, 3, 4, 5, 6].map((col) => (
         <div className="gameboard__grid__col" key={col}>
           {[0, 1, 2, 3, 4, 5].map((cell) => (
-            <div className="gameboard__grid__cell" key={cell}></div>
+            <div
+              className="gameboard__grid__cell gameboard__grid__cell--yellow"
+              key={cell}
+            ></div>
           ))}
         </div>
       ))}
