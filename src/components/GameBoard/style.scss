@@ -1,0 +1,31 @@
+.gameboard {
+  position: relative;
+  width: 63.2rem;
+  height: 58.4rem;
+
+  &__front,
+  &__back,
+  &__grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__grid {
+    width: 100%;
+    display: flex;
+    padding: 2rem;
+    gap: 2.4rem;
+
+    &__col {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+    }
+
+    &__cell {
+      width: 6.4rem;
+      height: 6.4rem;
+    }
+  }
+}
