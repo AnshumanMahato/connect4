@@ -11,9 +11,17 @@
     left: 0;
   }
 
+  &__back {
+    z-index: 0;
+  }
+  &__front {
+    z-index: 2;
+  }
+
   &__grid {
-    width: 100%;
     display: flex;
+    z-index: 1;
+    width: 100%;
     padding: 2rem;
     gap: 2.4rem;
 
