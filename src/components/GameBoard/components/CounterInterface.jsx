@@ -1,4 +1,5 @@
 import useGameLogic from '../hooks/useGameLogic';
+import ControlColumns from './ControlColums';
 import CounterGrid from './CounterGrid';
 
 function CounterInterface() {
@@ -7,6 +8,7 @@ function CounterInterface() {
   return (
     <>
       <CounterGrid grid={grid} setPosition={setPosition} />
+      <ControlColumns setPosition={setPosition} />
     </>
   );
 }

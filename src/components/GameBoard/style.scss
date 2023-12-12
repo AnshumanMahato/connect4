@@ -5,7 +5,8 @@
 
   &__front,
   &__back,
-  &__grid {
+  &__grid,
+  &__controls {
     position: absolute;
     top: 0;
     left: 0;
@@ -14,14 +15,21 @@
   &__back {
     z-index: 0;
   }
+  &__grid {
+    z-index: 1;
+  }
   &__front {
     z-index: 2;
   }
+  &__controls {
+    z-index: 3;
+  }
 
-  &__grid {
+  &__grid,
+  &__controls {
     display: flex;
-    z-index: 1;
     width: 100%;
+    height: 100%;
     padding: 2rem;
     gap: 2.4rem;
 
@@ -29,6 +37,8 @@
       display: flex;
       flex-direction: column;
       gap: 2.4rem;
+      width: 6.4rem;
+      height: 100%;
     }
 
     &__cell {
