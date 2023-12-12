@@ -3,12 +3,12 @@ import ControlColumns from './ControlColums';
 import CounterGrid from './CounterGrid';
 
 function CounterInterface() {
-  const [grid, setPosition] = useGameLogic();
+  const [grid, insertCounter] = useGameLogic();
 
   return (
     <>
-      <CounterGrid grid={grid} setPosition={setPosition} />
-      <ControlColumns setPosition={setPosition} />
+      <CounterGrid grid={grid} />
+      <ControlColumns insertCounter={insertCounter} />
     </>
   );
 }
