@@ -14,7 +14,7 @@ function useGameLogic() {
   const insertCounter = useCallback((col, player) => {
     //Check if the column number is valid
     if (col < 1 || col > 7) throw new Error('Invalid column number');
-    console.log('inserting counter in column', col);
+
     //Check if the player number is valid
     let value;
     switch (player) {

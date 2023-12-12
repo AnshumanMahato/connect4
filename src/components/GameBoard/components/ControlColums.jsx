@@ -9,10 +9,7 @@ function ControlColumns({ insertCounter }) {
         <div
           key={col}
           className="gameboard__controls__col"
-          onClick={() => {
-            console.log('inserting counter in column', col);
-            insertCounter(col, Math.random() > 0.5 ? 1 : 2);
-          }}
+          onClick={() => insertCounter(col, Math.random() > 0.5 ? 1 : 2)}
         ></div>
       ))}
     </div>
