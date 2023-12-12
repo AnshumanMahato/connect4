@@ -15,6 +15,7 @@ CounterComponent.propTypes = {
   counterState: PropTypes.number,
 };
 
+//memoizing to prevent unnecessary re-renders
 const Counter = memo(CounterComponent);
 
 export default Counter;
