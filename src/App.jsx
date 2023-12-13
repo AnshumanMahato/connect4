@@ -1,7 +1,12 @@
 import GameBoard from './components/GameBoard';
 
 function App() {
-  return <GameBoard />;
+  return (
+    <>
+      <h1>Testing</h1>
+      <GameBoard />;
+    </>
+  );
 }
 
 export default App;

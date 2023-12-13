@@ -60,4 +60,32 @@
       }
     }
   }
+
+  &__marker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    gap: 2.4rem;
+    padding: 2rem;
+    transform: translateY(-100%);
+
+    &__col {
+      position: relative;
+      height: 2.6rem;
+      width: 6.4rem;
+
+      & > * {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    .marker {
+      opacity: 0;
+    }
+  }
 }

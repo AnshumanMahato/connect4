@@ -10,7 +10,11 @@ function CounterGrid({ grid }) {
       {cols.map((col) => (
         <div key={col} className="gameboard__grid__col">
           {rows.map((row) => (
-            <Counter key={`${row}-${col}`} counterState={grid[row][col]} />
+            <Counter
+              key={`${row}-${col}`}
+              counterState={grid[row][col]}
+              className={`cell-${row}-${col}`}
+            />
           ))}
         </div>
       ))}
@@ -19,7 +23,7 @@ function CounterGrid({ grid }) {
 }
 
 CounterGrid.propTypes = {
-  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
 };
 
 export default CounterGrid;

@@ -8,7 +8,7 @@ function CounterInterface() {
   return (
     <>
       <CounterGrid grid={grid} />
-      <ControlColumns insertCounter={insertCounter} />
+      <ControlColumns insertCounter={insertCounter} grid={grid} />
     </>
   );
 }
