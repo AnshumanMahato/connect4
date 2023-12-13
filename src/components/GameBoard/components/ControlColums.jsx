@@ -28,6 +28,7 @@ function ControlColumns({ grid, insertCounter }) {
       anime({
         targets: `.marker-${player}-${col}`,
         opacity: [0, 1],
+        duration: 50,
       }).play();
     },
     [player]
@@ -38,6 +39,7 @@ function ControlColumns({ grid, insertCounter }) {
       anime({
         targets: `.marker-${player}-${col}`,
         opacity: [1, 0],
+        duration: 50,
       }).play();
     },
     [player]
