@@ -58,8 +58,6 @@ const getChain = (grid, recentEntry, direction) => {
   const colDiff = Math.abs(chainEnd[1] - chainStart[1]);
   const chain_length = Math.max(rowDiff, colDiff) + 1;
 
-  console.log(chainStart, chainEnd, chain_length, direction);
-
   //return chain if length is greater than or equal to 4
   if (chain_length >= 4)
     return {
