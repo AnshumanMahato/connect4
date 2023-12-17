@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import getChain from '../utils/getChain';
 
 function useGameLogic() {
   const [grid, setGrid] = useState([
@@ -15,97 +16,24 @@ function useGameLogic() {
 
   useEffect(() => {
     if (!recentEntry.current) return;
-    console.log('hello');
 
-    let chain_start = recentEntry.current;
-    let chain_end = recentEntry.current;
-    let [row, col] = recentEntry.current;
-
+    let chain = null;
     //Check horizontal chain
-    while (col > 1) {
-      if (grid[row][col] === grid[row][col - 1]) {
-        chain_start = [row, col - 1];
-        col--;
-      } else break;
-    }
-    col = recentEntry.current[1];
-    while (col < 7) {
-      if (grid[row][col] === grid[row][col + 1]) {
-        chain_end = [row, col + 1];
-        col++;
-      } else break;
-    }
-
-    if (Math.abs(chain_end[1] - chain_start[1]) >= 4) {
-      return console.log('horizontal chain');
-    }
+    chain = getChain(grid, recentEntry.current, 'h');
 
     //Check Left Diagonal chain
-    chain_start = chain_end = recentEntry.current;
-    [row, col] = recentEntry.current;
-
-    while (row > 1 && col > 1) {
-      if (grid[row][col] === grid[row - 1][col - 1]) {
-        chain_start = [row - 1, col - 1];
-        row--;
-        col--;
-      } else break;
-    }
-
-    [row, col] = recentEntry.current;
-
-    while (row < 6 && col < 7) {
-      if (grid[row][col] === grid[row + 1][col + 1]) {
-        chain_end = [row + 1, col + 1];
-        row++;
-        col++;
-      } else break;
-    }
-
-    if (Math.abs(chain_end[1] - chain_start[1]) >= 4) {
-      return console.log('left diagonal chain');
-    }
+    if (!chain) chain = getChain(grid, recentEntry.current, 'ld');
 
     //Check Right Diagonal chain
-    chain_start = chain_end = recentEntry.current;
-    [row, col] = recentEntry.current;
-
-    while (row < 6 && col > 1) {
-      if (grid[row][col] === grid[row + 1][col - 1]) {
-        chain_start = [row + 1, col - 1];
-        row++;
-        col--;
-      } else break;
-    }
-
-    [row, col] = recentEntry.current;
-
-    while (row > 1 && col < 7) {
-      if (grid[row][col] === grid[row - 1][col + 1]) {
-        chain_end = [row - 1, col + 1];
-        row--;
-        col++;
-      } else break;
-    }
-
-    if (Math.abs(chain_end[1] - chain_start[1]) >= 4) {
-      return console.log('right diagonal chain');
-    }
+    if (!chain) chain = getChain(grid, recentEntry.current, 'rd');
 
     //Check vertical chain
-    chain_start = chain_end = recentEntry.current;
-    [row, col] = recentEntry.current;
+    if (!chain) chain = getChain(grid, recentEntry.current, 'v');
 
-    while (row < 6) {
-      if (grid[row][col] === grid[row + 1][col]) {
-        chain_end = [row + 1, col];
-        row++;
-      } else break;
-    }
+    //Check if there is a chain
+    if (!chain) return;
 
-    if (Math.abs(chain_end[0] - chain_start[0]) >= 4) {
-      return console.log('vertical chain');
-    }
+    alert(JSON.stringify(chain));
   }, [grid]);
 
   const insertCounter = useCallback((col, player) => {
