@@ -3,7 +3,7 @@ import ControlColumns from './ControlColums';
 import CounterGrid from './CounterGrid';
 
 function CounterInterface() {
-  const [grid, insertCounter] = useGameLogic();
+  const { grid, insertCounter } = useGameLogic();
 
   return (
     <>

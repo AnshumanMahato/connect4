@@ -12,7 +12,11 @@ function CounterComponent({ counterState, className }) {
     className
   );
 
-  return <div className={classes}></div>;
+  return (
+    <div className={classes}>
+      <div className="winmark"></div>
+    </div>
+  );
 }
 
 CounterComponent.propTypes = {

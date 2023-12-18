@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import getChain from '../utils/getChain';
+import markChain from '../utils/markChain';
 
 function useGameLogic() {
   const [grid, setGrid] = useState([
@@ -33,8 +34,21 @@ function useGameLogic() {
     //Check if there is a chain
     if (!chain) return;
 
-    alert(JSON.stringify(chain));
+    markChain(chain);
   }, [grid]);
+
+  const resetGrid = useCallback(() => {
+    recentEntry.current = null;
+    setGrid([
+      [0, 6, 6, 6, 6, 6, 6, 6],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+  }, []);
 
   const insertCounter = useCallback((col, player) => {
     //Check if the column number is valid
@@ -73,7 +87,7 @@ function useGameLogic() {
     });
   }, []);
 
-  return [grid, insertCounter];
+  return { grid, insertCounter, resetGrid };
 }
 
 export default useGameLogic;
