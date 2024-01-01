@@ -16,7 +16,11 @@
     margin-top: 6.4rem;
   }
 
-  &__option:not(:last-child) {
-    margin-bottom: 3rem;
+  &__option {
+    justify-content: center;
+
+    &:not(:last-child) {
+      margin-bottom: 3rem;
+    }
   }
 }

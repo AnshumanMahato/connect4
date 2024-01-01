@@ -1,8 +1,16 @@
+import { useDispatch } from 'react-redux';
 import Button from '../Button';
 import Panel from '../Panel';
 import './style.scss';
+import { goToHome } from '../../store';
 
 function Rules() {
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(goToHome());
+  };
+
   return (
     <Panel className="rules">
       <div className="rules__container">
@@ -34,7 +42,7 @@ function Rules() {
             </ul>
           </div>
         </section>
-        <Button red check className="rules__close">
+        <Button red check className="rules__close" onClick={handleClose}>
           Back
         </Button>
       </div>

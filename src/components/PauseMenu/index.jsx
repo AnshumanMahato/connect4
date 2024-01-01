@@ -10,7 +10,9 @@ function PauseMenu() {
         <div className="pausemenu__options">
           <Button className="pausemenu__option">Continue Game</Button>
           <Button className="pausemenu__option">Restart</Button>
-          <Button red>Quit Game</Button>
+          <Button className="pausemenu__option" red>
+            Quit Game
+          </Button>
         </div>
       </div>
     </Panel>
