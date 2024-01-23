@@ -1,0 +1,12 @@
+.gamefooter {
+  width: 100%;
+  background-color: var(--color-primary);
+
+  &--red {
+    background-color: var(--color-red);
+  }
+
+  &--yellow {
+    background-color: var(--color-yellow);
+  }
+}

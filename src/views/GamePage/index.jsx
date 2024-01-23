@@ -1,4 +1,5 @@
 import GameBoard from '../../components/GameBoard';
+import GameFooter from '../../components/GameFooter';
 import GameNav from '../../components/GameNav';
 import './style.scss';
 
@@ -7,6 +8,7 @@ function GamePage() {
     <main className="game-page">
       <GameNav />
       <GameBoard />
+      <GameFooter />
     </main>
   );
 }
