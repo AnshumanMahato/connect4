@@ -1,7 +1,8 @@
 .gamefooter {
   width: 100%;
+  height: 23rem;
   background-color: var(--color-primary);
-
+  border-radius: 6rem 6rem 0 0;
   &--red {
     background-color: var(--color-red);
   }

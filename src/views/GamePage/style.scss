@@ -1,4 +1,5 @@
 .game-page {
+  position: relative;
   width: 100vw;
   min-height: 100vh;
   background-color: var(--color-accent);
@@ -6,4 +7,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
 }

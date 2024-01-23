@@ -5,11 +5,13 @@ import './style.scss';
 
 function GamePage() {
   return (
-    <main className="game-page">
-      <GameNav />
-      <GameBoard />
-      <GameFooter />
-    </main>
+    <>
+      <main className="game-page">
+        <GameNav />
+        <GameBoard />
+        <GameFooter className="footer" />
+      </main>
+    </>
   );
 }
 
