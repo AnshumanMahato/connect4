@@ -10,19 +10,7 @@
     position: absolute;
     top: 0;
     left: 0;
-  }
-
-  &__back {
-    z-index: 0;
-  }
-  &__grid {
     z-index: 1;
-  }
-  &__front {
-    z-index: 2;
-  }
-  &__controls {
-    z-index: 3;
   }
 
   &__grid,
@@ -101,5 +89,13 @@
     .marker {
       opacity: 0;
     }
+  }
+
+  &__status {
+    position: absolute !important;
+    z-index: 2;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -25%);
   }
 }
