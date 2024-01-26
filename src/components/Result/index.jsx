@@ -1,9 +1,11 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Panel from '../Panel';
 import Button from '../Button';
 import './style.scss';
 
-function Result({ winner }) {
+function Result({ winner, className }) {
+  const classes = classNames('result', className);
   let winnerTitle;
   switch (winner) {
     case 'player1':
@@ -22,7 +24,7 @@ function Result({ winner }) {
       winnerTitle = 'Invalid';
   }
   return (
-    <Panel className="result">
+    <Panel className={classes}>
       <div className="result__container">
         <h4 className="result__winner">{winnerTitle}</h4>
         <span className="result__win-text">WINS</span>
@@ -33,6 +35,7 @@ function Result({ winner }) {
 }
 
 Result.propTypes = {
+  className: PropTypes.string,
   winner: PropTypes.oneOf(['player1', 'player2', 'self', 'cpu']).isRequired,
 };
 

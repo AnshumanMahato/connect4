@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TimerBgRed from '../../assets/images/turn-background-red.svg?react';
 import TimerBgYellow from '../../assets/images/turn-background-yellow.svg?react';
 import './style.scss';
-import { useRef } from 'react';
-import { useEffect } from 'react';
+import classNames from 'classnames';
 
-function Timer({ player }) {
-  let [time, setTime] = useState(15);
+function Timer({ player, className }) {
+  const classes = classNames('timer', className);
   const interval = useRef(null);
+  let [time, setTime] = useState(15);
 
   useEffect(() => {
     interval.current = setTimeout(() => {
@@ -45,7 +45,7 @@ function Timer({ player }) {
       TimerBackground = TimerBgRed;
   }
   return (
-    <div className="timer">
+    <div className={classes}>
       <TimerBackground className="timer__background" />
       <div className="timer__container">
         <h4 className="timer__title">{timerTitle}</h4>
@@ -56,6 +56,7 @@ function Timer({ player }) {
 }
 
 Timer.propTypes = {
+  className: PropTypes.string,
   player: PropTypes.oneOf(['self', 'cpu', 'player1', 'player2']).isRequired,
 };
 
