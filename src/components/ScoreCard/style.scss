@@ -1,9 +1,10 @@
 .scorecard {
-  width: 14rem;
-  height: 16rem;
+  width: 14.4rem;
+  height: 16.3rem;
   padding: 4.5rem 2.5rem 1.5rem;
   border-radius: 2rem;
   position: relative;
+  background-color: var(--color-white);
 
   &__container {
     display: flex;
