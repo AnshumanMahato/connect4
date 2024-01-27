@@ -92,7 +92,7 @@
   }
 
   &__status {
-    position: absolute !important;
+    position: relative;
     z-index: 2;
     top: 100%;
     left: 50%;

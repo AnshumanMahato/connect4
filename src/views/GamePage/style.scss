@@ -6,7 +6,7 @@
   background-color: var(--color-accent);
 
   display: grid;
-  grid-template-rows: min-content auto;
+  grid-template-rows: min-content max-content;
   grid-template-columns: 1fr min-content 1fr;
   gap: 5rem 6rem;
 
@@ -19,19 +19,25 @@
   .gameboard {
     grid-column: 2 / 3;
     grid-row: 2;
+    margin-bottom: 10rem;
   }
 
   .scorecard {
+    align-self: center;
+    transform: translateY(-50%);
+
     &--self,
     &--player1 {
       grid-column: 1;
       grid-row: 2;
+      justify-self: flex-end;
     }
 
     &--cpu,
     &--player2 {
       grid-column: 3;
       grid-row: 2;
+      justify-self: flex-start;
     }
   }
 
