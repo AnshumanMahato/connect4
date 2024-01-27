@@ -2,11 +2,38 @@
   position: relative;
   width: 100vw;
   min-height: 100vh;
+  padding: 5rem;
   background-color: var(--color-accent);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-rows: min-content auto;
+  grid-template-columns: 1fr min-content 1fr;
+  gap: 5rem 6rem;
+
+  .gamenav {
+    grid-column: 2;
+    grid-row: 1;
+    z-index: 1;
+  }
+
+  .gameboard {
+    grid-column: 2 / 3;
+    grid-row: 2;
+  }
+
+  .scorecard {
+    &--self,
+    &--player1 {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    &--cpu,
+    &--player2 {
+      grid-column: 3;
+      grid-row: 2;
+    }
+  }
 
   .footer {
     position: absolute;

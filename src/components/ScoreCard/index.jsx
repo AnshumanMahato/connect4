@@ -35,7 +35,7 @@ function ScoreCard({ player, score }) {
   }
 
   return (
-    <Panel className="scorecard">
+    <Panel className={`scorecard scorecard--${player}`}>
       <PlayerIcon className="scorecard__icon" />
       <div className="scorecard__container">
         <h3 className="scorecard__player">{playerName}</h3>
