@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import GameBoard from '../../components/GameBoard';
 import GameFooter from '../../components/GameFooter';
 import GameNav from '../../components/GameNav';
-import ScoreCard from '../../components/ScoreCard';
+import ScoreCard from '../../components/utils/ScoreCard';
 import './style.scss';
 
 function GamePage() {

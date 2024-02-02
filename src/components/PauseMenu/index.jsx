@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import Panel from '../Panel';
-import Button from '../Button';
+import Panel from '../utils/Panel';
+import Button from '../utils/Button';
 import './style.scss';
 import { useDispatch } from 'react-redux';
 import { goToHome } from '../../store';

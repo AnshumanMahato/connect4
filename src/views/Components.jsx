@@ -1,10 +1,10 @@
-import Button from '../components/Button';
+import Button from '../components/utils/Button';
 import MainMenu from '../components/MainMenu';
 import PauseMenu from '../components/PauseMenu';
-import Result from '../components/Result';
+import Result from '../components/utils/Result';
 import Rules from '../components/Rules';
-import ScoreCard from '../components/ScoreCard';
-import Timer from '../components/Timer';
+import ScoreCard from '../components/utils/ScoreCard';
+import Timer from '../components/utils/Timer';
 
 function Components() {
   return (

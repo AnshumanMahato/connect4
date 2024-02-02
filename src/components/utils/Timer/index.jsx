@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import TimerBgRed from '../../assets/images/turn-background-red.svg?react';
-import TimerBgYellow from '../../assets/images/turn-background-yellow.svg?react';
+import TimerBgRed from '../../../assets/images/turn-background-red.svg?react';
+import TimerBgYellow from '../../../assets/images/turn-background-yellow.svg?react';
 import './style.scss';
 import classNames from 'classnames';
 

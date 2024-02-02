@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Button from '../Button';
+import Button from '../utils/Button';
 import PauseMenu from '../PauseMenu';
 import Logo from '../../assets/images/logo.svg?react';
 import './style.scss';

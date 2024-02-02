@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import Button from '../Button';
-import Panel from '../Panel';
+import Button from '../utils/Button';
+import Panel from '../utils/Panel';
 import './style.scss';
 import { goToHome } from '../../store';
 
