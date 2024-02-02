@@ -2,13 +2,12 @@
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  padding: 5rem;
   background-color: var(--color-accent);
 
   display: grid;
   grid-template-rows: min-content max-content;
   grid-template-columns: 1fr min-content 1fr;
-  gap: 5rem 6rem;
+  gap: 5rem 4.17%;
 
   .gamenav {
     grid-column: 2;
