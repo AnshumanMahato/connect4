@@ -1,21 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
 
-//Media Queries Handler
-@mixin respond($breakpoint) {
-  @if $breakpoint == phone {
-    @media (max-width: 37.5em) {
-      @content;
-    }
-  }
-
-  @if $breakpoint == tab {
-    // 1080px
-    @media (max-width: 67.5em) {
-      @content;
-    }
-  }
-}
-
 :root {
   --color-primary: #5c2dd5;
   --color-accent: #7945ff;

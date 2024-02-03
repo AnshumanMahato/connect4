@@ -30,4 +30,55 @@
     font-weight: 700;
     line-height: normal;
   }
+
+  @media only screen and (max-width: 67.5em) {
+    width: 27.5rem;
+    height: 10rem;
+    padding: 1.4rem 2rem 1.5rem;
+
+    &__container {
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    &--player1,
+    &--you {
+      .scorecard {
+        &__container {
+          justify-content: flex-end;
+        }
+
+        &__icon {
+          top: 50%;
+          left: 0%;
+          transform: translate(-50%, -45%);
+        }
+      }
+    }
+    &--player2,
+    &--cpu {
+      .scorecard {
+        &__container {
+          justify-content: flex-start;
+        }
+
+        &__score {
+          order: -1;
+        }
+
+        &__icon {
+          top: 50%;
+          left: 100%;
+          transform: translate(-50%, -45%);
+        }
+      }
+    }
+
+    &__score {
+      width: 10.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
