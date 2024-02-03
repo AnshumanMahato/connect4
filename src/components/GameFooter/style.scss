@@ -10,4 +10,8 @@
   &--yellow {
     background-color: var(--color-yellow);
   }
+
+  @media only screen and (max-width: 67.5em) {
+    height: 23.5rem;
+  }
 }

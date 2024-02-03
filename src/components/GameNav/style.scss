@@ -2,6 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media only screen and (max-width: 67.5em) {
+    width: 63.5rem;
+    justify-self: center;
+  }
 }
 
 .overlay {
