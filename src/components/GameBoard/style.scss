@@ -89,6 +89,10 @@
     .marker {
       opacity: 0;
     }
+
+    @media only screen and (max-width: 67.5em) {
+      display: none;
+    }
   }
 
   &__status {
