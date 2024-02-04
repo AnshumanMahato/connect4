@@ -111,4 +111,38 @@
     left: 50%;
     transform: translate(-50%, -35%);
   }
+
+  @media only screen and (max-width: 43.75em) {
+    width: 33.5rem;
+    height: 32rem;
+
+    &__back {
+      background-image: url('/assets/images/board-layer-black-small.svg');
+    }
+    &__front {
+      background-image: url('/assets/images/board-layer-white-small.svg');
+    }
+
+    &__grid,
+    &__controls {
+      padding: 1.06rem;
+      gap: 1.27rem;
+
+      &__col {
+        width: 3.39rem;
+        gap: 1.27rem;
+      }
+
+      &__cell {
+        width: 3.39rem;
+        height: 3.39rem;
+
+        .winmark {
+          width: 60%;
+          height: 60%;
+          border: 5px solid var(--color-white);
+        }
+      }
+    }
+  }
 }
