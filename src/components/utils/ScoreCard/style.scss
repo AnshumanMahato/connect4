@@ -81,4 +81,25 @@
       align-items: center;
     }
   }
+
+  @media only screen and (max-width: 43.75em) {
+    width: 14.5rem;
+    height: 8.5rem;
+    padding: 1rem 3.5rem;
+
+    &__container {
+      width: 7rem;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    &__player {
+      font-size: 1.6rem;
+    }
+
+    &__score {
+      font-size: 3.2rem;
+      order: 0 !important;
+    }
+  }
 }
