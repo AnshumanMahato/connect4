@@ -8,6 +8,8 @@ import Result from '../utils/Result';
 import Timer from '../utils/Timer';
 import useGameLogic from './hooks/useGameLogic';
 import './style.scss';
+import BoardBack from './components/BoardBack';
+import BoardFront from './components/BoardFront';
 
 function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
@@ -17,9 +19,11 @@ function GameBoard({ className }) {
   let winner = null;
   return (
     <div className={classes}>
-      <BoardBackLarge className="gameboard__back" />
+      {/* <BoardBackLarge className="gameboard__back" /> */}
+      <BoardBack />
       <CounterGrid grid={grid} />
-      <BoardFrontLarge className="gameboard__front" />
+      {/* <BoardFrontLarge className="gameboard__front" /> */}
+      <BoardFront />
       <ControlColumns insertCounter={insertCounter} grid={grid} />
       {winner ? (
         <Result winner={winner} className="gameboard__status" />
