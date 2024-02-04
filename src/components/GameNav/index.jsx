@@ -17,11 +17,13 @@ function GameNav({ className }) {
   return (
     <>
       <nav className={classes}>
-        <Button small onClick={handleMenuClick}>
+        <Button small onClick={handleMenuClick} className="gamenav__button">
           menu
         </Button>
-        <Logo />
-        <Button small>restart</Button>
+        <Logo className="gamenav__logo" />
+        <Button small className="gamenav__button">
+          restart
+        </Button>
       </nav>
       <AnimatePresence>
         {showMenu && (

@@ -7,6 +7,23 @@
     width: 63.5rem;
     justify-self: center;
   }
+
+  @media only screen and (max-width: 43.75em) {
+    width: 33.5rem;
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr;
+    gap: 4rem;
+
+    &__logo {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    &__button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
 }
 
 .overlay {
