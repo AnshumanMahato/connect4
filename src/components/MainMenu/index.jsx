@@ -27,7 +27,7 @@ function MainMenu() {
             className="mainmenu_option mainmenu_option--pvp"
             onClick={handlePvpClick}
           >
-            <span>Player vs player</span>
+            <span>Play vs player</span>
             <Pvp className="mainmenu__option__icon" />
           </Button>
           <Button

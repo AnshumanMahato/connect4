@@ -30,4 +30,25 @@
   &_option:not(:last-child) {
     margin-bottom: 3rem;
   }
+
+  @media only screen and (max-width: 43.75em) {
+    background-color: transparent;
+    border: none;
+    width: 100vw;
+    box-shadow: none;
+    padding: 0 2rem;
+
+    &_container {
+      width: 100%;
+    }
+
+    &_options {
+      width: min(100%, 40rem);
+      margin-top: 7rem;
+    }
+
+    &_option {
+      width: 100%;
+    }
+  }
 }
