@@ -5,15 +5,16 @@ import TimerBgYellow from '../../../assets/images/turn-background-yellow.svg?rea
 import './style.scss';
 import classNames from 'classnames';
 
-function Timer({ player, className }) {
+function Timer({ className, player, duration, onTimeout: handleTimeout }) {
   const classes = classNames('timer', className);
   const interval = useRef(null);
-  let [time, setTime] = useState(15);
+  let [time, setTime] = useState(duration);
 
   useEffect(() => {
     interval.current = setTimeout(() => {
       if (time === 0) {
-        setTime(15);
+        handleTimeout();
+        setTime(duration);
         return;
       }
       setTime((currTime) => currTime - 1);
@@ -58,6 +59,8 @@ function Timer({ player, className }) {
 Timer.propTypes = {
   className: PropTypes.string,
   player: PropTypes.oneOf(['self', 'cpu', 'player1', 'player2']).isRequired,
+  duration: PropTypes.number.isRequired,
+  onTimeout: PropTypes.func.isRequired,
 };
 
 export default Timer;

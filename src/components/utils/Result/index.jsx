@@ -4,7 +4,7 @@ import Panel from '../Panel';
 import Button from '../Button';
 import './style.scss';
 
-function Result({ winner, className }) {
+function Result({ className, winner, onReset: handleReset }) {
   const classes = classNames('result', className);
   let winnerTitle;
   switch (winner) {
@@ -28,7 +28,9 @@ function Result({ winner, className }) {
       <div className="result__container">
         <h4 className="result__winner">{winnerTitle}</h4>
         <span className="result__win-text">WINS</span>
-        <Button small>Play Again</Button>
+        <Button small onClick={handleReset}>
+          Play Again
+        </Button>
       </div>
     </Panel>
   );
@@ -37,6 +39,7 @@ function Result({ winner, className }) {
 Result.propTypes = {
   className: PropTypes.string,
   winner: PropTypes.oneOf(['player1', 'player2', 'self', 'cpu']).isRequired,
+  onReset: PropTypes.func.isRequired,
 };
 
 export default Result;
