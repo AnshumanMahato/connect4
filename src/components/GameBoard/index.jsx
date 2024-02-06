@@ -14,7 +14,7 @@ function GameBoard({ className }) {
 
   const { grid, insertCounter } = useGameLogic();
 
-  let winner = 'player1';
+  let winner = null;
   return (
     <div className={classes}>
       <BoardBack />

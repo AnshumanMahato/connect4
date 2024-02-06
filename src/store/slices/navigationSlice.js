@@ -19,4 +19,4 @@ const navigationSlice = createSlice({
 });
 
 export const { goToGame, goToHome, goToRules } = navigationSlice.actions;
-export const navigationReducer = navigationSlice.reducer;
+export default navigationSlice;

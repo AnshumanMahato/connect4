@@ -13,7 +13,7 @@ function Timer({ player, className }) {
   useEffect(() => {
     interval.current = setTimeout(() => {
       if (time === 0) {
-        clearTimeout(interval.current);
+        setTime(15);
         return;
       }
       setTime((currTime) => currTime - 1);

@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { navigationReducer } from './slices/navigationSlice';
+import navigationSlice from './slices/navigationSlice';
+import gameSlice from './slices/gameSlice';
 
 const store = configureStore({
   reducer: {
-    navigation: navigationReducer,
+    [navigationSlice.name]: navigationSlice.reducer,
+    [gameSlice.name]: gameSlice.reducer,
   },
 });
 
 export { goToHome, goToGame, goToRules } from './slices/navigationSlice';
+export { switchPlayer } from './slices/gameSlice';
 export default store;
