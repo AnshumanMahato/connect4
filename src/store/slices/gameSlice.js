@@ -74,7 +74,7 @@ const gameSlice = createSlice({
     },
 
     resetGame: (state) => {
-      state.winner = null;
+      state.currentWinner = null;
       state.recentEntry = null;
       state.grid = [
         [0, 6, 6, 6, 6, 6, 6, 6],
