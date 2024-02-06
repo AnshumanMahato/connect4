@@ -47,4 +47,9 @@
     left: 50%;
     transform: translate(-50%, 50%);
   }
+
+  @media only screen and (max-width: 43.75em) {
+    width: 33.5rem;
+    padding: 3rem 2rem;
+  }
 }
