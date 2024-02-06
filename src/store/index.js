@@ -10,5 +10,10 @@ const store = configureStore({
 });
 
 export { goToHome, goToGame, goToRules } from './slices/navigationSlice';
-export { switchPlayer } from './slices/gameSlice';
+export {
+  switchPlayer,
+  insertCounter,
+  setWinner,
+  resetGame,
+} from './slices/gameSlice';
 export default store;
