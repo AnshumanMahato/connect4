@@ -1,18 +1,33 @@
-import PropTypes from 'prop-types';
 import anime from 'animejs';
+import { useDispatch, useSelector } from 'react-redux';
 import MarkerRed from '../../../assets/images/marker-red.svg?react';
 import MarkerYellow from '../../../assets/images/marker-yellow.svg?react';
 import { useCallback } from 'react';
+import { insertCounter, switchPlayer } from '../../../store';
 
-function ControlColumns({ grid, insertCounter }) {
+function ControlColumns() {
   const cols = [1, 2, 3, 4, 5, 6, 7];
 
-  const player = 1;
+  const dispatch = useDispatch();
+  const { currentPlayer, grid } = useSelector((state) => state.game);
+
+  let player;
+  switch (currentPlayer) {
+    case 'player1':
+    case 'self':
+      player = 1;
+      break;
+    case 'player2':
+    case 'cpu':
+      player = 2;
+      break;
+  }
 
   const handleClick = useCallback(
     (col) => {
       const row = grid[0][col];
-      insertCounter(col, Math.random() > 0.5 ? 1 : 2);
+      dispatch(insertCounter({ col }));
+      dispatch(switchPlayer());
       anime({
         targets: `.cell-${row}-${col}`,
         translateY: [`-${row * 130}%`, '0%'],
@@ -20,7 +35,7 @@ function ControlColumns({ grid, insertCounter }) {
         easing: 'easeOutBounce',
       }).play();
     },
-    [grid, insertCounter]
+    [grid, dispatch]
   );
 
   const handleMouseEnter = useCallback(
@@ -34,24 +49,23 @@ function ControlColumns({ grid, insertCounter }) {
     [player]
   );
 
-  const handleMousLeave = useCallback(
-    (col) => {
-      anime({
-        targets: `.marker-${player}-${col}`,
-        opacity: [1, 0],
-        duration: 50,
-      }).play();
-    },
-    [player]
-  );
+  const handleMousLeave = useCallback((col) => {
+    anime({
+      targets: [`.marker-1-${col}`, `.marker-2-${col}`],
+      opacity: [1, 0],
+      duration: 50,
+    }).play();
+  }, []);
 
   return (
     <div className="gameboard__controls">
       <div className="gameboard__marker">
         {cols.map((col) => (
           <div key={col} className="gameboard__marker__col">
-            <MarkerRed className={`marker marker-1-${col}`} />
-            <MarkerYellow className={`marker marker-2-${col}`} />
+            {player === 1 && <MarkerRed className={`marker marker-1-${col}`} />}
+            {player === 2 && (
+              <MarkerYellow className={`marker marker-2-${col}`} />
+            )}
           </div>
         ))}
       </div>
@@ -67,10 +81,5 @@ function ControlColumns({ grid, insertCounter }) {
     </div>
   );
 }
-
-ControlColumns.propTypes = {
-  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  insertCounter: PropTypes.func.isRequired,
-};
 
 export default ControlColumns;
