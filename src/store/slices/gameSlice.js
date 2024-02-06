@@ -7,6 +7,7 @@ const gameSlice = createSlice({
     scoreP1: 0,
     scoreP2: 0,
     currentWinner: null,
+    recentEntry: null,
     grid: [
       [0, 6, 6, 6, 6, 6, 6, 6],
       [0, 0, 0, 0, 0, 0, 0, 0],
@@ -55,6 +56,7 @@ const gameSlice = createSlice({
       newGrid[0][col]--;
 
       state.grid = newGrid;
+      state.recentEntry = [row, col];
     },
 
     setWinner: (state) => {
@@ -73,6 +75,7 @@ const gameSlice = createSlice({
 
     resetGame: (state) => {
       state.winner = null;
+      state.recentEntry = null;
       state.grid = [
         [0, 6, 6, 6, 6, 6, 6, 6],
         [0, 0, 0, 0, 0, 0, 0, 0],
