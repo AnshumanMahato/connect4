@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BoardBack from './components/BoardBack';
 import BoardFront from './components/BoardFront';
@@ -7,11 +8,8 @@ import ControlColumns from './components/ControlColums';
 import CounterGrid from './components/CounterGrid';
 import Result from '../utils/Result';
 import Timer from '../utils/Timer';
-import { resetGame, setWinner, switchPlayer } from '../../store';
+import { checkWinner, resetGame, switchPlayer } from '../../store';
 import './style.scss';
-import { useEffect } from 'react';
-import getChain from './utils/getChain';
-import markChain from './utils/markChain';
 
 function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
@@ -20,7 +18,6 @@ function GameBoard({ className }) {
   const {
     currentPlayer: player,
     currentWinner,
-    grid,
     recentEntry,
   } = useSelector((state) => state.game);
 
@@ -36,25 +33,8 @@ function GameBoard({ className }) {
   useEffect(() => {
     if (!recentEntry) return;
 
-    let chain = null;
-    //Check horizontal chain
-    chain = getChain(grid, recentEntry, 'h');
-
-    //Check Left Diagonal chain
-    if (!chain) chain = getChain(grid, recentEntry, 'ld');
-
-    //Check Right Diagonal chain
-    if (!chain) chain = getChain(grid, recentEntry, 'rd');
-
-    //Check vertical chain
-    if (!chain) chain = getChain(grid, recentEntry, 'v');
-
-    //Check if there is a chain
-    if (!chain) return;
-
-    markChain(chain);
-    dispatch(setWinner());
-  }, [grid, recentEntry, dispatch]);
+    dispatch(checkWinner());
+  }, [recentEntry, dispatch]);
 
   return (
     <div className={classes}>

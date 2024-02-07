@@ -13,7 +13,7 @@ export { goToHome, goToGame, goToRules } from './slices/navigationSlice';
 export {
   switchPlayer,
   insertCounter,
-  setWinner,
+  checkWinner,
   resetGame,
 } from './slices/gameSlice';
 export default store;

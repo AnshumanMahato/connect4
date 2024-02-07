@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MarkerRed from '../../../assets/images/marker-red.svg?react';
 import MarkerYellow from '../../../assets/images/marker-yellow.svg?react';
 import { useCallback } from 'react';
-import { insertCounter, switchPlayer } from '../../../store';
+import { insertCounter } from '../../../store';
 
 function ControlColumns() {
   const cols = [1, 2, 3, 4, 5, 6, 7];
@@ -27,7 +27,6 @@ function ControlColumns() {
     (col) => {
       const row = grid[0][col];
       dispatch(insertCounter({ col }));
-      dispatch(switchPlayer());
       anime({
         targets: `.cell-${row}-${col}`,
         translateY: [`-${row * 130}%`, '0%'],

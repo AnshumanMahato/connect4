@@ -43,11 +43,19 @@ const gameSlice = createSlice({
       let value;
       switch (state.currentPlayer) {
         case 'player1':
+          state.currentPlayer = 'player2';
+          value = 1;
+          break;
         case 'self':
+          state.currentPlayer = 'cpu';
           value = 1;
           break;
         case 'player2':
+          state.currentPlayer = 'player1';
+          value = 2;
+          break;
         case 'cpu':
+          state.currentPlayer = 'self';
           value = 2;
           break;
       }
@@ -116,6 +124,6 @@ const gameSlice = createSlice({
   },
 });
 
-export const { switchPlayer, insertCounter, setWinner, resetGame } =
+export const { switchPlayer, insertCounter, checkWinner, resetGame } =
   gameSlice.actions;
 export default gameSlice;
