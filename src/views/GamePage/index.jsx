@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import GameBoard from '../../components/GameBoard';
 import GameFooter from '../../components/GameFooter';
+import { useSelector } from 'react-redux';
 import GameNav from '../../components/GameNav';
 import ScoreCard from '../../components/utils/ScoreCard';
 import './style.scss';
 
 function GamePage() {
+  const { scoreP1, scoreP2 } = useSelector((state) => state.game);
+
   return (
     <motion.main
       className="game-page"
@@ -15,8 +18,8 @@ function GamePage() {
     >
       <GameNav />
       <GameBoard />
-      <ScoreCard player="player1" score={0} />
-      <ScoreCard player="player2" score={0} />
+      <ScoreCard player="player1" score={scoreP1} />
+      <ScoreCard player="player2" score={scoreP2} />
       <GameFooter className="footer" />
     </motion.main>
   );

@@ -1,14 +1,7 @@
-import anime from 'animejs';
-
-const markChain = (chain) => {
-  const {
-    chainEnd: [rowEnd, colEnd],
-    direction,
-  } = chain;
+const getBounds = (direction, rowEnd, colEnd) => {
   let rowChange = 0,
     colChange = 0,
     bound;
-
   //SET PARAMETERS AS PER DIRECTION
   switch (direction) {
     case 'h':
@@ -33,25 +26,37 @@ const markChain = (chain) => {
       throw new Error('Invalid direction');
   }
 
+  return { rowChange, colChange, bound };
+};
+
+const markChain = (grid, chain) => {
+  const {
+    chainEnd: [rowEnd, colEnd],
+    direction,
+  } = chain;
+
+  const { rowChange, colChange, bound } = getBounds(direction, rowEnd, colEnd);
+
   //INITIALIZE TARGETS
   let [row, col] = chain.chainStart;
-  let targets = [];
+  //Deep Clone grid
+  const newGrid = grid.map((row) => [...row]);
   while (bound(row, col)) {
-    targets.push(`.cell-${row}-${col} .winmark`);
+    switch (newGrid[row][col]) {
+      case 1:
+        newGrid[row][col] = 1111;
+        break;
+      case 2:
+        newGrid[row][col] = 2222;
+        break;
+      default:
+        break;
+    }
     row += rowChange;
     col += colChange;
   }
 
-  //ADD ANIMATION
-  anime({
-    targets,
-    opacity: [0, 1],
-    duration: 1000,
-    delay: anime.stagger(300, {
-      start: 700,
-      from: 'center',
-    }),
-  }).play();
+  return newGrid;
 };
 
 export default markChain;

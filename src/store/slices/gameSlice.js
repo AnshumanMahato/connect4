@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import getChain from '../../components/GameBoard/utils/getChain';
+import markChain from '../../components/GameBoard/utils/markChain';
 
 const gameSlice = createSlice({
   name: 'game',
@@ -31,6 +33,9 @@ const gameSlice = createSlice({
     },
 
     insertCounter: (state, action) => {
+      //Check if there is a winner already
+      if (state.currentWinner) return { ...state };
+
       const { col } = action.payload;
       const row = state.grid[0][col];
       if (!row) return state;
@@ -59,15 +64,37 @@ const gameSlice = createSlice({
       state.recentEntry = [row, col];
     },
 
-    setWinner: (state) => {
-      state.currentWinner = state.currentPlayer;
+    checkWinner: (state) => {
+      const { grid, recentEntry } = state;
+      let chain = null;
+      //Check horizontal chain
+      chain = getChain(grid, recentEntry, 'h');
+      //Check Left Diagonal chain
+      if (!chain) chain = getChain(grid, recentEntry, 'ld');
+      //Check Right Diagonal chain
+      if (!chain) chain = getChain(grid, recentEntry, 'rd');
+      //Check vertical chain
+      if (!chain) chain = getChain(grid, recentEntry, 'v');
+      //Check if there is a chain
+      if (!chain) return { ...state };
+
+      //If there is a chain, mark it and set the winner
+      state.grid = markChain(grid, chain);
       switch (state.currentPlayer) {
         case 'player1':
+          state.currentWinner = 'player2';
+          state.scoreP2++;
+          break;
         case 'self':
-          state.scoreP1++;
+          state.currentWinner = 'cpu';
+          state.scoreP2++;
           break;
         case 'player2':
+          state.currentWinner = 'player1';
+          state.scoreP1++;
+          break;
         case 'cpu':
+          state.currentWinner = 'self';
           state.scoreP2++;
           break;
       }
