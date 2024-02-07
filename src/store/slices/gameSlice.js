@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import getChain from '../../components/GameBoard/utils/getChain';
-import markChain from '../../components/GameBoard/utils/markChain';
+import getChain from '../../utils/getChain';
+import markChain from '../../utils/markChain';
 
 const gameSlice = createSlice({
   name: 'game',

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import getChain from '../utils/getChain';
-import markChain from '../utils/markChain';
+import getChain from '../../../utils/getChain';
+import markChain from '../../../utils/markChain';
 
 function useGameLogic() {
   const [grid, setGrid] = useState([
