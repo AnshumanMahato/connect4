@@ -2,7 +2,6 @@ import { AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import HomePage from './views/HomePage';
 import GamePage from './views/GamePage';
-import Components from './views/Components';
 import RulesPage from './views/RulesPage';
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
       {currentPage === 'home' && <HomePage />}
       {currentPage === 'game' && <GamePage />}
       {currentPage === 'rules' && <RulesPage />}
-      {currentPage === 'components' && <Components />}
     </AnimatePresence>
   );
 }

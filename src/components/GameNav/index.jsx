@@ -6,13 +6,18 @@ import Button from '../utils/Button';
 import PauseMenu from '../PauseMenu';
 import Logo from '../../assets/images/logo.svg?react';
 import './style.scss';
+import { useDispatch } from 'react-redux';
+import { restartGame } from '../../store';
 
 function GameNav({ className }) {
   const classes = classNames('gamenav', className);
   const [showMenu, setShowMenu] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleMenuClick = useCallback(() => setShowMenu(true), []);
   const handleMenuClose = useCallback(() => setShowMenu(false), []);
+  const handleRestart = useCallback(() => dispatch(restartGame()), [dispatch]);
 
   return (
     <>
@@ -21,7 +26,7 @@ function GameNav({ className }) {
           menu
         </Button>
         <Logo className="gamenav__logo" />
-        <Button small className="gamenav__button">
+        <Button small onClick={handleRestart} className="gamenav__button">
           restart
         </Button>
       </nav>
@@ -33,7 +38,7 @@ function GameNav({ className }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <PauseMenu onClose={handleMenuClose} />
+            <PauseMenu onClose={handleMenuClose} onRestart={handleRestart} />
           </motion.div>
         )}
       </AnimatePresence>
