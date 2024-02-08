@@ -128,6 +128,22 @@ const gameSlice = createSlice({
       state.recentEntry = null;
       state.scoreP1 = 0;
       state.scoreP2 = 0;
+
+      switch (state.currentPlayer) {
+        case 'player1':
+          state.currentPlayer = 'player2';
+          break;
+        case 'self':
+          state.currentPlayer = 'cpu';
+          break;
+        case 'player2':
+          state.currentPlayer = 'player1';
+          break;
+        case 'cpu':
+          state.currentPlayer = 'self';
+          break;
+      }
+
       state.grid = [
         [0, 6, 6, 6, 6, 6, 6, 6],
         [0, 0, 0, 0, 0, 0, 0, 0],

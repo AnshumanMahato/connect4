@@ -21,14 +21,12 @@ function Timer({ className, duration }) {
       //Reset timer when current player changes
       prevPlayer.current = currentPlayer;
       setTime(duration);
-      return;
     }
 
     interval.current = setTimeout(() => {
       if (time === 0) {
         //switch player when time ends
         dispatch(switchPlayer());
-        return;
       }
       setTime((currTime) => currTime - 1);
     }, 1000);
