@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import getChain from '../../utils/getChain';
 import markChain from '../../utils/markChain';
+import { goToHome } from './navigationSlice';
 
 const gameSlice = createSlice({
   name: 'game',
@@ -137,6 +138,23 @@ const gameSlice = createSlice({
         [0, 0, 0, 0, 0, 0, 0, 0],
       ];
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(goToHome, (state) => {
+      state.currentWinner = null;
+      state.recentEntry = null;
+      state.scoreP1 = 0;
+      state.scoreP2 = 0;
+      state.grid = [
+        [0, 6, 6, 6, 6, 6, 6, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+      ];
+    });
   },
 });
 

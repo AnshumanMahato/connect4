@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Counter from './Counter';
 import { useSelector } from 'react-redux';
 
@@ -24,9 +23,5 @@ function CounterGrid() {
     </div>
   );
 }
-
-CounterGrid.propTypes = {
-  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-};
 
 export default CounterGrid;
