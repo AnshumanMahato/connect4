@@ -6,29 +6,16 @@ import BoardBack from './components/BoardBack';
 import BoardFront from './components/BoardFront';
 import ControlColumns from './components/ControlColums';
 import CounterGrid from './components/CounterGrid';
-import Result from '../utils/Result';
-import Timer from '../utils/Timer';
-import { checkWinner, resetGame, switchPlayer } from '../../store';
+import Result from './components/Result';
+import Timer from './components/Timer';
+import { checkWinner } from '../../store';
 import './style.scss';
 
 function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
 
   const dispatch = useDispatch();
-  const {
-    currentPlayer: player,
-    currentWinner,
-    recentEntry,
-  } = useSelector((state) => state.game);
-
-  const handleTimeout = () => {
-    dispatch(switchPlayer());
-  };
-
-  const handleReset = () => {
-    dispatch(resetGame());
-    console.log('Reset');
-  };
+  const { currentWinner, recentEntry } = useSelector((state) => state.game);
 
   useEffect(() => {
     if (!recentEntry) return;
@@ -43,18 +30,9 @@ function GameBoard({ className }) {
       <BoardFront />
       <ControlColumns />
       {currentWinner ? (
-        <Result
-          winner={currentWinner}
-          onReset={handleReset}
-          className="gameboard__status"
-        />
+        <Result winner={currentWinner} className="gameboard__result" />
       ) : (
-        <Timer
-          player={player}
-          duration={15}
-          onTimeout={handleTimeout}
-          className="gameboard__status"
-        />
+        <Timer duration={15} className="gameboard__timer" />
       )}
     </div>
   );
