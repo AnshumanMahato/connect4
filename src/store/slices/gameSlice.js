@@ -108,9 +108,25 @@ const gameSlice = createSlice({
       }
     },
 
-    resetGame: (state) => {
+    resetBoard: (state) => {
       state.currentWinner = null;
       state.recentEntry = null;
+      state.grid = [
+        [0, 6, 6, 6, 6, 6, 6, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+      ];
+    },
+
+    restartGame: (state) => {
+      state.currentWinner = null;
+      state.recentEntry = null;
+      state.scoreP1 = 0;
+      state.scoreP2 = 0;
       state.grid = [
         [0, 6, 6, 6, 6, 6, 6, 6],
         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -124,6 +140,11 @@ const gameSlice = createSlice({
   },
 });
 
-export const { switchPlayer, insertCounter, checkWinner, resetGame } =
-  gameSlice.actions;
+export const {
+  switchPlayer,
+  insertCounter,
+  checkWinner,
+  resetBoard,
+  restartGame,
+} = gameSlice.actions;
 export default gameSlice;

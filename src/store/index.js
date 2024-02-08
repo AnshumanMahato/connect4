@@ -14,6 +14,7 @@ export {
   switchPlayer,
   insertCounter,
   checkWinner,
-  resetGame,
+  resetBoard,
+  restartGame,
 } from './slices/gameSlice';
 export default store;
