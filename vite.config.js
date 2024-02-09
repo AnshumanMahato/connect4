@@ -11,5 +11,12 @@ export default defineConfig({
       cert: fs.readFileSync('./certs/localhost.pem'),
     },
   },
-  plugins: [react(), svgr()],
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        ref: true,
+      },
+    }),
+  ],
 });

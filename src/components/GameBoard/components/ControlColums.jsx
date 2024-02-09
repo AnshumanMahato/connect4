@@ -1,27 +1,17 @@
 import anime from 'animejs';
+import { useAnimate } from 'framer-motion';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkerRed from '../../../assets/images/marker-red.svg?react';
 import MarkerYellow from '../../../assets/images/marker-yellow.svg?react';
-import { useCallback } from 'react';
 import { insertCounter } from '../../../store';
 
 function ControlColumns() {
   const cols = [1, 2, 3, 4, 5, 6, 7];
 
   const dispatch = useDispatch();
-  const { currentPlayer, grid } = useSelector((state) => state.game);
-
-  let player;
-  switch (currentPlayer) {
-    case 'player1':
-    case 'self':
-      player = 1;
-      break;
-    case 'player2':
-    case 'cpu':
-      player = 2;
-      break;
-  }
+  const { currentPlayer: player, grid } = useSelector((state) => state.game);
+  const [scope, animate] = useAnimate();
 
   const handleClick = useCallback(
     (col) => {
@@ -38,32 +28,25 @@ function ControlColumns() {
   );
 
   const handleMouseEnter = useCallback(
-    (col) => {
-      anime({
-        targets: `.marker-${player}-${col}`,
-        opacity: [0, 1],
-        duration: 50,
-      }).play();
-    },
-    [player]
+    (col) => animate(`.marker-${col}`, { opacity: 1 }, { duration: 0.05 }),
+    [animate]
   );
 
-  const handleMousLeave = useCallback((col) => {
-    anime({
-      targets: [`.marker-1-${col}`, `.marker-2-${col}`],
-      opacity: [1, 0],
-      duration: 50,
-    }).play();
-  }, []);
+  const handleMousLeave = useCallback(
+    (col) => animate(`.marker-${col}`, { opacity: 0 }, { duration: 0.05 }),
+    [animate]
+  );
 
   return (
     <div className="gameboard__controls">
-      <div className="gameboard__marker">
+      <div ref={scope} className="gameboard__marker">
         {cols.map((col) => (
           <div key={col} className="gameboard__marker__col">
-            {player === 1 && <MarkerRed className={`marker marker-1-${col}`} />}
-            {player === 2 && (
-              <MarkerYellow className={`marker marker-2-${col}`} />
+            {(player === 'player1' || player === 'self') && (
+              <MarkerRed className={`marker marker-${col}`} />
+            )}
+            {(player === 'player2' || player === 'cpu') && (
+              <MarkerYellow className={`marker marker-${col}`} />
             )}
           </div>
         ))}
