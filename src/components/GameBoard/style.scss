@@ -196,7 +196,8 @@
       }
     }
 
-    &__status {
+    .result,
+    .timer {
       transform: translate(-50%, -17%);
     }
   }
