@@ -20,7 +20,7 @@ function ControlColumns({ animate }) {
       animate(
         `.cell-${row}-${col}`,
         { translateY: [`-${row * 130}%`, '0%'] },
-        { duration: 0.5, easing: easeOutBounce }
+        { duration: 1, ease: easeOutBounce }
       );
     },
     [grid, dispatch, animate]
