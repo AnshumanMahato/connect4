@@ -10,12 +10,14 @@ import Result from './components/Result';
 import Timer from './components/Timer';
 import { checkWinner } from '../../store';
 import './style.scss';
+import { useAnimate } from 'framer-motion';
 
 function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
 
   const dispatch = useDispatch();
   const { currentWinner, recentEntry } = useSelector((state) => state.game);
+  const [scope, animate] = useAnimate();
 
   useEffect(() => {
     if (!recentEntry) return;
@@ -24,11 +26,11 @@ function GameBoard({ className }) {
   }, [recentEntry, dispatch]);
 
   return (
-    <div className={classes}>
+    <div ref={scope} className={classes}>
       <BoardBack />
       <CounterGrid />
       <BoardFront />
-      <ControlColumns />
+      <ControlColumns animate={animate} />
       {currentWinner ? (
         <Result winner={currentWinner} className="gameboard__result" />
       ) : (

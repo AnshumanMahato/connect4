@@ -1,30 +1,29 @@
-import anime from 'animejs';
-import { useAnimate } from 'framer-motion';
+import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkerRed from '../../../assets/images/marker-red.svg?react';
 import MarkerYellow from '../../../assets/images/marker-yellow.svg?react';
 import { insertCounter } from '../../../store';
+import easeOutBounce from '../../../utils/easeOutBounce';
 
-function ControlColumns() {
+function ControlColumns({ animate }) {
   const cols = [1, 2, 3, 4, 5, 6, 7];
 
   const dispatch = useDispatch();
   const { currentPlayer: player, grid } = useSelector((state) => state.game);
-  const [scope, animate] = useAnimate();
 
   const handleClick = useCallback(
     (col) => {
       const row = grid[0][col];
+      if (!row) return;
       dispatch(insertCounter({ col }));
-      anime({
-        targets: `.cell-${row}-${col}`,
-        translateY: [`-${row * 130}%`, '0%'],
-        duration: 1000,
-        easing: 'easeOutBounce',
-      }).play();
+      animate(
+        `.cell-${row}-${col}`,
+        { translateY: [`-${row * 130}%`, '0%'] },
+        { duration: 0.5, easing: easeOutBounce }
+      );
     },
-    [grid, dispatch]
+    [grid, dispatch, animate]
   );
 
   const handleMouseEnter = useCallback(
@@ -39,7 +38,7 @@ function ControlColumns() {
 
   return (
     <div className="gameboard__controls">
-      <div ref={scope} className="gameboard__marker">
+      <div className="gameboard__marker">
         {cols.map((col) => (
           <div key={col} className="gameboard__marker__col">
             {(player === 'player1' || player === 'self') && (
@@ -63,5 +62,9 @@ function ControlColumns() {
     </div>
   );
 }
+
+ControlColumns.propTypes = {
+  animate: PropTypes.func.isRequired,
+};
 
 export default ControlColumns;
