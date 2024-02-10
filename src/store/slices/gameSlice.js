@@ -9,6 +9,7 @@ const gameSlice = createSlice({
     currentPlayer: 'player1',
     scoreP1: 0,
     scoreP2: 0,
+    isDraw: false,
     currentWinner: null,
     recentEntry: null,
     grid: [
@@ -75,6 +76,12 @@ const gameSlice = createSlice({
 
     checkWinner: (state) => {
       const { grid, recentEntry } = state;
+
+      //Check if draw
+      if (grid[0].every((cell) => cell === 0)) {
+        return { ...state, isDraw: true };
+      }
+
       let chain = null;
       //Check horizontal chain
       chain = getChain(grid, recentEntry, 'h');
@@ -112,6 +119,7 @@ const gameSlice = createSlice({
     resetBoard: (state) => {
       state.currentWinner = null;
       state.recentEntry = null;
+      state.isDraw = false;
       state.grid = [
         [0, 6, 6, 6, 6, 6, 6, 6],
         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -126,9 +134,9 @@ const gameSlice = createSlice({
     restartGame: (state) => {
       state.currentWinner = null;
       state.recentEntry = null;
+      state.isDraw = false;
       state.scoreP1 = 0;
       state.scoreP2 = 0;
-
       switch (state.currentPlayer) {
         case 'player1':
           state.currentPlayer = 'player2';
@@ -159,6 +167,7 @@ const gameSlice = createSlice({
     builder.addCase(goToHome, (state) => {
       state.currentWinner = null;
       state.recentEntry = null;
+      state.isDraw = false;
       state.scoreP1 = 0;
       state.scoreP2 = 0;
       state.grid = [

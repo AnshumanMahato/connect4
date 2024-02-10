@@ -16,7 +16,9 @@ function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
 
   const dispatch = useDispatch();
-  const { currentWinner, recentEntry } = useSelector((state) => state.game);
+  const { currentWinner, recentEntry, isDraw } = useSelector(
+    (state) => state.game
+  );
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
@@ -31,8 +33,12 @@ function GameBoard({ className }) {
       <CounterGrid />
       <BoardFront />
       <ControlColumns animate={animate} />
-      {currentWinner ? (
-        <Result winner={currentWinner} className="gameboard__result" />
+      {currentWinner || isDraw ? (
+        <Result
+          isDraw={isDraw}
+          winner={currentWinner}
+          className="gameboard__result"
+        />
       ) : (
         <Timer duration={15} className="gameboard__timer" />
       )}

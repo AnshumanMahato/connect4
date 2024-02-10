@@ -23,3 +23,5 @@ certs
 *.njsproj
 *.sln
 *.sw?
+
+testing
