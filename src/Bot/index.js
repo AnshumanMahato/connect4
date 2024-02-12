@@ -1,15 +1,5 @@
-class Bot {
-  constructor() {
-    this.name = 'Bot';
-  }
-
-  #minmax(grid, depth, isMaximizing) {}
-
-  #evaluate(grid, player) {}
-
-  sayHello() {
-    return `Hello, I'm ${this.name}`;
-  }
+function Bot(a, b) {
+  return a + b;
 }
 
 export default Bot;
