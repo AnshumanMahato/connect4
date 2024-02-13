@@ -1,5 +1,7 @@
-function Bot(a, b) {
-  return a + b;
+class Bot {
+  pickBestMove() {
+    return Math.floor(Math.random() * 7) + 1;
+  }
 }
 
-export default Bot;
+export default new Bot();

@@ -1,6 +1,7 @@
 import Bot from '../Bot';
 import { expect, test } from '@jest/globals';
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(Bot(1, 2)).toBe(3);
+test('returned column must be between 1 and 7', () => {
+  expect(Bot.pickBestMove()).toBeGreaterThanOrEqual(1);
+  expect(Bot.pickBestMove()).toBeLessThanOrEqual(7);
 });
