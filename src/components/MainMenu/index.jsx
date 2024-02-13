@@ -2,6 +2,7 @@ import Button from '../utils/Button';
 import Panel from '../utils/Panel';
 import Logo from '../../assets/images/logo.svg?react';
 import Pvp from '../../assets/images/player-vs-player.svg?react';
+import Pve from '../../assets/images/player-vs-cpu.svg?react';
 import './style.scss';
 import { useDispatch } from 'react-redux';
 import { goToGame, goToRules } from '../../store';
@@ -10,7 +11,11 @@ function MainMenu() {
   const dispatch = useDispatch();
 
   const handlePvpClick = () => {
-    dispatch(goToGame());
+    dispatch(goToGame({ mode: 'pvp' }));
+  };
+
+  const handlePveClick = () => {
+    dispatch(goToGame({ mode: 'pve' }));
   };
 
   const handleRulesClick = () => {
@@ -22,6 +27,14 @@ function MainMenu() {
       <div className="mainmenu_container">
         <Logo className="logo mainmenu_logo" />
         <div className="mainmenu_options">
+          <Button
+            red
+            className="mainmenu_option mainmenu_option--pvp"
+            onClick={handlePveClick}
+          >
+            <span>Play vs cpu</span>
+            <Pve className="mainmenu__option__icon" />
+          </Button>
           <Button
             yellow
             className="mainmenu_option mainmenu_option--pvp"
