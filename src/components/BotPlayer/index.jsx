@@ -14,6 +14,8 @@ function BotPlayer({ animate }) {
 
   useEffect(() => {
     if (currentPlayer === 'cpu' && !isEvaluating && !currentWinner && !isDraw) {
+      // Random delay to simulate thinking time for the bot (2-5 seconds)
+      const duration = 2000 + parseInt(Math.random() * 3000, 10);
       timeout.current = setTimeout(() => {
         const [row, col] = bot.pickBestMove(grid);
         dispatch(insertCounter({ col }));
@@ -22,7 +24,7 @@ function BotPlayer({ animate }) {
           { translateY: [`-${row * 130}%`, '0%'] },
           { duration: 1, ease: easeOutBounce }
         );
-      }, 5000);
+      }, duration);
 
       return () => clearTimeout(timeout.current);
     }

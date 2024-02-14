@@ -50,7 +50,7 @@ function GameBoard({ className }) {
             className="gameboard__result"
           />
         ) : (
-          <Timer duration={15} className="gameboard__timer" />
+          <Timer duration={30} className="gameboard__timer" />
         )}
       </div>
     </>
