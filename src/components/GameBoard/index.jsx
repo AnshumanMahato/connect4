@@ -16,7 +16,7 @@ function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
 
   const dispatch = useDispatch();
-  const { currentWinner, recentEntry, isDraw } = useSelector(
+  const { currentPlayer, currentWinner, recentEntry, isDraw } = useSelector(
     (state) => state.game
   );
   const [scope, animate] = useAnimate();
@@ -32,7 +32,7 @@ function GameBoard({ className }) {
       <BoardBack />
       <CounterGrid />
       <BoardFront />
-      <ControlColumns animate={animate} />
+      {currentPlayer !== 'cpu' && <ControlColumns animate={animate} />}
       {currentWinner || isDraw ? (
         <Result
           isDraw={isDraw}
