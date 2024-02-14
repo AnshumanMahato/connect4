@@ -42,7 +42,7 @@
     }
 
     &--player1,
-    &--you {
+    &--self {
       .scorecard {
         &__container {
           justify-content: flex-end;
