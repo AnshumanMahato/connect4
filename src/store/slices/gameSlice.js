@@ -21,6 +21,7 @@ const gameSlice = createSlice({
     currentPlayer: 'player1',
     scoreP1: 0,
     scoreP2: 0,
+    isEvaluating: false,
     isDraw: false,
     currentWinner: null,
     recentEntry: null,
@@ -69,6 +70,7 @@ const gameSlice = createSlice({
       //Update empty row
       newGrid[0][col]--;
 
+      state.isEvaluating = true;
       state.currentPlayer = getNextPlayer(state);
       state.grid = newGrid;
       state.recentEntry = [row, col];
@@ -79,7 +81,7 @@ const gameSlice = createSlice({
 
       //Check if draw
       if (grid[0].every((cell) => cell === 0)) {
-        return { ...state, isDraw: true };
+        return { ...state, isEvaluating: false, isDraw: true };
       }
 
       let chain = null;
@@ -92,11 +94,10 @@ const gameSlice = createSlice({
       //Check vertical chain
       if (!chain) chain = getChain(grid, recentEntry, 'v');
       //Check if there is a chain
-      if (!chain) return { ...state };
+      if (!chain) return { ...state, isEvaluating: false };
 
       //If there is a chain, mark it and set the winner
       const { currentPlayer, player1, player2 } = state;
-      state.grid = markChain(grid, chain);
       switch (currentPlayer) {
         case player1:
           state.currentWinner = player2;
@@ -107,6 +108,8 @@ const gameSlice = createSlice({
           state.scoreP1++;
           break;
       }
+      state.grid = markChain(grid, chain);
+      state.isEvaluating = false;
     },
 
     resetBoard: (state) => {
@@ -160,7 +163,20 @@ const gameSlice = createSlice({
       ];
     });
     builder.addCase(goToGame, (state, action) => {
-      console.log(action.payload);
+      const { mode } = action.payload;
+      state.mode = mode;
+      switch (mode) {
+        case 'pve':
+          state.player1 = 'self';
+          state.player2 = 'cpu';
+          state.currentPlayer = 'self';
+          break;
+        case 'pvp':
+          state.player1 = 'player1';
+          state.player2 = 'player2';
+          state.currentPlayer = 'player1';
+          break;
+      }
     });
   },
 });

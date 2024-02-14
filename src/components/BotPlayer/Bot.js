@@ -10,7 +10,7 @@ class Bot {
   }
 
   pickBestMove(grid) {
-    const availablePos = this.getAvailablePositions(grid[0]);
+    const availablePos = this.#getAvailablePositions(grid[0]);
     const index = Math.floor(Math.random() * availablePos.length);
     const col = availablePos[index];
     const row = grid[0][col];
