@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import getChain from '../../utils/getChain';
 import markChain from '../../utils/markChain';
 import { goToGame, goToHome } from './navigationSlice';
+import { EASY, PVE, PVP } from '../constants/gameConstants';
 
 const getNextPlayer = ({ currentPlayer, player1, player2 }) => {
   switch (currentPlayer) {
@@ -15,7 +16,8 @@ const getNextPlayer = ({ currentPlayer, player1, player2 }) => {
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
-    mode: 'pvp',
+    mode: PVP,
+    difficulty: null,
     player1: 'player1',
     player2: 'player2',
     currentPlayer: 'player1',
@@ -163,20 +165,22 @@ const gameSlice = createSlice({
       ];
     });
     builder.addCase(goToGame, (state, action) => {
-      const { mode } = action.payload || {};
+      const { mode, difficulty } = action.payload || {};
       if (!mode) return { ...state };
 
       state.mode = mode;
       switch (mode) {
-        case 'pve':
+        case PVE:
           state.player1 = 'self';
           state.player2 = 'cpu';
           state.currentPlayer = 'self';
+          state.difficulty = difficulty || EASY;
           break;
-        case 'pvp':
+        case PVP:
           state.player1 = 'player1';
           state.player2 = 'player2';
           state.currentPlayer = 'player1';
+          state.difficulty = null;
           break;
       }
     });
