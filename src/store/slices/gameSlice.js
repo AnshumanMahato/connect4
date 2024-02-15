@@ -44,12 +44,12 @@ const gameSlice = createSlice({
 
     insertCounter: (state, action) => {
       //Check if there is a winner already
-      if (state.currentWinner) return { ...state };
+      if (state.currentWinner) return state;
 
       const { grid } = state;
       const { col } = action.payload;
       const row = grid[0][col];
-      if (!row) return { ...state };
+      if (!row) return state;
 
       const { currentPlayer, player1, player2 } = state;
 
@@ -166,7 +166,7 @@ const gameSlice = createSlice({
     });
     builder.addCase(goToGame, (state, action) => {
       const { mode, difficulty } = action.payload || {};
-      if (!mode) return { ...state };
+      if (!mode) return state;
 
       state.mode = mode;
       switch (mode) {

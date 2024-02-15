@@ -36,7 +36,7 @@ function Result({ className, isDraw, winner }) {
   return (
     <Panel className={classes}>
       <div className="result__container">
-        <h4 className="result__winner">{winnerTitle}</h4>
+        <h3 className="result__winner">{winnerTitle}</h3>
         <span className="result__win-text">{(isDraw && 'DRAW') || 'WINS'}</span>
         <Button small onClick={handleReset}>
           Play Again

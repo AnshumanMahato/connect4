@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import GameBoard from '../../components/GameBoard';
 import GameFooter from '../../components/GameFooter';
 import GameNav from '../../components/GameNav';
@@ -19,7 +19,7 @@ function GamePage() {
     const { player1, player2, scoreP1, scoreP2 } = state.game;
     const { current } = state.navigation;
     return { player1, player2, scoreP1, scoreP2, current };
-  });
+  }, shallowEqual);
 
   return (
     <motion.main
