@@ -1,9 +1,9 @@
+import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import MainMenu from '../../components/MainMenu';
-import './style.scss';
 import DifficultyMenu from '../../components/DifficultyMenu';
-import { useSelector } from 'react-redux';
 import { DIFFICULTY, HOME } from '../../store/constants/navConatansts';
+import './style.scss';
 
 function HomePage() {
   const { current: currentPage } = useSelector((state) => state.navigation);

@@ -1,12 +1,12 @@
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '../utils/Button';
 import Panel from '../utils/Panel';
 import Logo from '../../assets/images/logo.svg?react';
 import Pvp from '../../assets/images/player-vs-player.svg?react';
 import Pve from '../../assets/images/player-vs-cpu.svg?react';
-import './style.scss';
-import { useDispatch } from 'react-redux';
 import { goToDifficulty, goToGame, goToRules } from '../../store';
-import { useCallback } from 'react';
+import './style.scss';
 
 function MainMenu(props) {
   const dispatch = useDispatch();
