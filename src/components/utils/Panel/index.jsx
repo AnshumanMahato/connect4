@@ -1,11 +1,16 @@
+import { motion } from 'framer-motion';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function Panel({ children, className }) {
+function Panel({ children, className, ...rest }) {
   const classes = classNames('panel', className);
 
-  return <div className={classes}>{children}</div>;
+  return (
+    <motion.div className={classes} {...rest}>
+      {children}
+    </motion.div>
+  );
 }
 
 Panel.propTypes = {
