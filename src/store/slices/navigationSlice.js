@@ -1,22 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {
+  DIFFICULTY,
+  GAME,
+  HOME,
+  PAUSE,
+  RULES,
+} from '../constants/navConatansts';
+import { restartGame } from './gameSlice';
 
 const navigationSlice = createSlice({
   name: 'navigation',
   initialState: {
-    current: 'home',
+    current: HOME,
   },
   reducers: {
     goToHome: (state) => {
-      state.current = 'home';
+      state.current = HOME;
+    },
+    goToDifficulty: (state) => {
+      state.current = DIFFICULTY;
     },
     goToGame: (state) => {
-      state.current = 'game';
+      state.current = GAME;
+    },
+    goToPause: (state) => {
+      state.current = PAUSE;
     },
     goToRules: (state) => {
-      state.current = 'rules';
+      state.current = RULES;
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(restartGame, (state) => {
+      state.current = GAME;
+    });
   },
 });
 
-export const { goToGame, goToHome, goToRules } = navigationSlice.actions;
+export const { goToGame, goToHome, goToRules, goToDifficulty, goToPause } =
+  navigationSlice.actions;
 export default navigationSlice;

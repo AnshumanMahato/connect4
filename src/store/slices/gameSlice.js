@@ -163,7 +163,9 @@ const gameSlice = createSlice({
       ];
     });
     builder.addCase(goToGame, (state, action) => {
-      const { mode } = action.payload;
+      const { mode } = action.payload || {};
+      if (!mode) return { ...state };
+
       state.mode = mode;
       switch (mode) {
         case 'pve':

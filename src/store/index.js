@@ -9,7 +9,13 @@ const store = configureStore({
   },
 });
 
-export { goToHome, goToGame, goToRules } from './slices/navigationSlice';
+export {
+  goToHome,
+  goToGame,
+  goToRules,
+  goToDifficulty,
+  goToPause,
+} from './slices/navigationSlice';
 export {
   switchPlayer,
   insertCounter,
