@@ -5,7 +5,7 @@ import Button from '../utils/Button';
 import { goToGame, goToHome, restartGame } from '../../store';
 import './style.scss';
 
-function PauseMenu() {
+function PauseMenu(props) {
   const dispatch = useDispatch();
 
   const handleQuit = useCallback(() => dispatch(goToHome()), [dispatch]);
@@ -13,7 +13,7 @@ function PauseMenu() {
   const handleRestart = useCallback(() => dispatch(restartGame()), [dispatch]);
 
   return (
-    <Panel className="pausemenu">
+    <Panel className="pausemenu" {...props}>
       <div className="pausemenu__container">
         <h1 className="pausemenu__title">PAUSE</h1>
         <div className="pausemenu__options">
