@@ -5,25 +5,26 @@ import Pvp from '../../assets/images/player-vs-player.svg?react';
 import Pve from '../../assets/images/player-vs-cpu.svg?react';
 import './style.scss';
 import { useDispatch } from 'react-redux';
-import { goToGame, goToRules } from '../../store';
+import { goToDifficulty, goToGame, goToRules } from '../../store';
+import { useCallback } from 'react';
 
-function MainMenu() {
+function MainMenu(props) {
   const dispatch = useDispatch();
 
-  const handlePvpClick = () => {
+  const handlePvpClick = useCallback(() => {
     dispatch(goToGame({ mode: 'pvp' }));
-  };
+  }, [dispatch]);
 
-  const handlePveClick = () => {
-    dispatch(goToGame({ mode: 'pve' }));
-  };
+  const handlePveClick = useCallback(() => {
+    dispatch(goToDifficulty());
+  }, [dispatch]);
 
-  const handleRulesClick = () => {
+  const handleRulesClick = useCallback(() => {
     dispatch(goToRules());
-  };
+  }, [dispatch]);
 
   return (
-    <Panel className="mainmenu">
+    <Panel className="mainmenu" {...props}>
       <div className="mainmenu_container">
         <Logo className="logo mainmenu_logo" />
         <div className="mainmenu_options">
