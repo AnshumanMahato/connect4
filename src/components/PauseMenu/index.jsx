@@ -1,19 +1,16 @@
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import Panel from '../utils/Panel';
 import Button from '../utils/Button';
+import { goToGame, goToHome, restartGame } from '../../store';
 import './style.scss';
-import { useDispatch } from 'react-redux';
-import { goToHome } from '../../store';
-import { useCallback } from 'react';
 
-function PauseMenu({ onClose: handleClose, onRestart: handleRestart }) {
+function PauseMenu() {
   const dispatch = useDispatch();
 
   const handleQuit = useCallback(() => dispatch(goToHome()), [dispatch]);
-  const handleRestartClick = useCallback(() => {
-    handleRestart();
-    handleClose();
-  }, [handleClose, handleRestart]);
+  const handleClose = useCallback(() => dispatch(goToGame()), [dispatch]);
+  const handleRestart = useCallback(() => dispatch(restartGame()), [dispatch]);
 
   return (
     <Panel className="pausemenu">
@@ -23,7 +20,7 @@ function PauseMenu({ onClose: handleClose, onRestart: handleRestart }) {
           <Button onClick={handleClose} className="pausemenu__option">
             Continue Game
           </Button>
-          <Button onClick={handleRestartClick} className="pausemenu__option">
+          <Button onClick={handleRestart} className="pausemenu__option">
             Restart
           </Button>
           <Button red onClick={handleQuit} className="pausemenu__option">
@@ -34,10 +31,5 @@ function PauseMenu({ onClose: handleClose, onRestart: handleRestart }) {
     </Panel>
   );
 }
-
-PauseMenu.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onRestart: PropTypes.func.isRequired,
-};
 
 export default PauseMenu;
