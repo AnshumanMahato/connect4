@@ -3,3 +3,7 @@ export const PVE = 'pve';
 export const EASY = 1;
 export const MEDIUM = 5;
 export const HARD = 10;
+export const P1 = 1;
+export const P2 = 2;
+export const winP1 = 1111;
+export const winP2 = 2222;

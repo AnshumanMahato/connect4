@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import getChain from '../../utils/getChain';
 import markChain from '../../utils/markChain';
 import { goToGame, goToHome } from './navigationSlice';
-import { EASY, PVE, PVP } from '../constants/gameConstants';
+import { EASY, PVE, PVP, P1, P2 } from '../constants/gameConstants';
 
 const getNextPlayer = ({ currentPlayer, player1, player2 }) => {
   switch (currentPlayer) {
@@ -57,10 +57,10 @@ const gameSlice = createSlice({
       let value;
       switch (currentPlayer) {
         case player1:
-          value = 1;
+          value = P1;
           break;
         case player2:
-          value = 2;
+          value = P2;
           break;
       }
 
@@ -81,11 +81,6 @@ const gameSlice = createSlice({
     checkWinner: (state) => {
       const { grid, recentEntry } = state;
 
-      //Check if draw
-      if (grid[0].every((cell) => cell === 0)) {
-        return { ...state, isEvaluating: false, isDraw: true };
-      }
-
       let chain = null;
       //Check horizontal chain
       chain = getChain(grid, recentEntry, 'h');
@@ -96,7 +91,14 @@ const gameSlice = createSlice({
       //Check vertical chain
       if (!chain) chain = getChain(grid, recentEntry, 'v');
       //Check if there is a chain
-      if (!chain) return { ...state, isEvaluating: false };
+      if (!chain) {
+        //Check if draw
+        if (grid[0].every((cell) => cell === 0)) {
+          return { ...state, isEvaluating: false, isDraw: true };
+        }
+
+        return { ...state, isEvaluating: false };
+      }
 
       //If there is a chain, mark it and set the winner
       const { currentPlayer, player1, player2 } = state;

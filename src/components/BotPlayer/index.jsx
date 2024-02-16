@@ -17,7 +17,7 @@ function BotPlayer({ animate }) {
       // Random delay to simulate thinking time for the bot (2-5 seconds)
       const duration = 2000 + parseInt(Math.random() * 3000, 10);
       timeout.current = setTimeout(() => {
-        const [row, col] = bot.pickBestMove(grid);
+        const [row, col] = bot.play(grid);
         dispatch(insertCounter({ col }));
         animate(
           `.cell-${row}-${col}`,
