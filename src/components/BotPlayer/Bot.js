@@ -69,6 +69,11 @@ class Bot {
      * @returns {Number} - The score of the grid
      */
     let score = 0;
+    //Check Center Column
+    const centerCount = grid
+      .map((row) => row[4])
+      .filter((cell) => cell === P2).length;
+    score += centerCount * 3;
     //Check horizontal
     for (let i = 1; i <= 6; i++) {
       for (let j = 1; j <= 4; j++) {
