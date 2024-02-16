@@ -1,4 +1,11 @@
 const getChain = (grid, recentEntry, direction) => {
+  /**
+   * Get the chain of a recent entry
+   * @param {Array} grid - The game grid
+   * @param {Array} recentEntry - The recent entry
+   * @param {String} direction - The direction to check
+   * @returns {Object} - The chain if there is a chain, null otherwise
+   */
   let chainStart = recentEntry;
   let chainEnd = recentEntry;
   let [row, col] = recentEntry;

@@ -3,11 +3,14 @@ import getChain from '../../utils/getChain';
 
 class Bot {
   #getAvailablePositions(tracker) {
+    /**
+     * Get the available positions on the grid
+     * @param {Array} tracker - The tracker array
+     * @returns {Array} - The available positions
+     */
     const availablePos = [];
-    tracker.forEach((col, index) => {
-      if (index) {
-        if (col) availablePos.push(index);
-      }
+    tracker.forEach((cell, index) => {
+      if (cell > 0) availablePos.push(index);
     });
     return availablePos;
   }
@@ -24,7 +27,6 @@ class Bot {
      * @param {Array} recentEntry - The last entry
      * @returns {Boolean} - True if the last entry is the winning move
      * @returns {Boolean} - False if the last entry is not the winning move
-     *
      */
     let chain = null;
     //Check horizontal chain
@@ -61,6 +63,11 @@ class Bot {
   }
 
   #getScore(grid) {
+    /**
+     * Get the score of the grid. Find how good the grid is for the bot
+     * @param {Array} grid - The game grid
+     * @returns {Number} - The score of the grid
+     */
     let score = 0;
     //Check horizontal
     for (let i = 1; i <= 6; i++) {
@@ -110,9 +117,11 @@ class Bot {
   }
 
   play(grid) {
+    //Get available positions
     const availablePos = this.#getAvailablePositions(grid[0]);
     let bestMove = [0, 0];
     let bestScore = -Infinity;
+    //Loop through the available positions to find the best possible move
     availablePos.every((col) => {
       const row = grid[0][col];
       const recentEntry = [row, col];
@@ -122,15 +131,20 @@ class Bot {
       next[0][col]--;
 
       let currentScore = 0;
+      //Check if the move is the winning move
       if (this.#isWinningMove(next, recentEntry)) {
         bestMove = [row, col];
         console.log('winning move');
         //Return false to break the loop
         return false;
-      } else if (this.#isDraw(next)) {
+      }
+      //Check if the move is a draw
+      else if (this.#isDraw(next)) {
         console.log('draw move');
         currentScore = 0;
-      } else {
+      }
+      //Get the score of the move
+      else {
         currentScore = this.#getScore(next);
         console.log('currentScore', currentScore);
       }

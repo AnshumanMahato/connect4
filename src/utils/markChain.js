@@ -30,6 +30,12 @@ const getBounds = (direction, rowEnd, colEnd) => {
 };
 
 const markChain = (grid, chain) => {
+  /**
+   * Mark the chain in the grid
+   * @param {Array} grid - The game grid
+   * @param {Object} chain - The chain to mark
+   * @returns {Array} - The grid with the chain marked
+   */
   const {
     chainEnd: [rowEnd, colEnd],
     direction,
