@@ -16,7 +16,6 @@ class Bot {
   }
 
   #isDraw(grid) {
-    //Check if draw
     return grid[0].every((cell) => cell === 0);
   }
 
@@ -69,11 +68,15 @@ class Bot {
      * @returns {Number} - The score of the grid
      */
     let score = 0;
+
     //Check Center Column
+    //adding more weight to the score for each piece in the center column
+    //as it will be needed for both horizontal and diagonal chains
     const centerCount = grid
       .map((row) => row[4])
       .filter((cell) => cell === P2).length;
     score += centerCount * 3;
+
     //Check horizontal
     for (let i = 1; i <= 6; i++) {
       for (let j = 1; j <= 4; j++) {
@@ -81,6 +84,7 @@ class Bot {
         score += this.#evaluateWindow(window);
       }
     }
+
     //Check vertical
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 7; j++) {
@@ -93,6 +97,7 @@ class Bot {
         score += this.#evaluateWindow(window);
       }
     }
+
     //Check left diagonal
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 4; j++) {
@@ -105,6 +110,7 @@ class Bot {
         score += this.#evaluateWindow(window);
       }
     }
+
     //Check right diagonal
     for (let i = 1; i <= 3; i++) {
       for (let j = 4; j <= 7; j++) {
@@ -126,10 +132,12 @@ class Bot {
     const availablePos = this.#getAvailablePositions(grid[0]);
     let bestMove = [0, 0];
     let bestScore = -Infinity;
+
     //Loop through the available positions to find the best possible move
     availablePos.every((col) => {
       const row = grid[0][col];
       const recentEntry = [row, col];
+
       //Simulate the move
       const next = grid.map((row) => [...row]);
       next[row][col] = P2;
