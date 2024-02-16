@@ -33,20 +33,20 @@ function GamePage() {
       <ScoreCard player={player1} score={scoreP1} />
       <ScoreCard player={player2} score={scoreP2} />
       <GameFooter className="footer" />
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {currentPage === PAUSE && (
           <motion.div
             className="overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            key="overlay"
           >
             <PauseMenu
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              transition={{ delay: 0.3, duration: 0.2 }}
+              transition={{ duration: 0.2 }}
             />
           </motion.div>
         )}

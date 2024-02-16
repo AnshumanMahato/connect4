@@ -15,13 +15,14 @@ function HomePage() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {currentPage === HOME && (
           <MainMenu
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ delay: 0.3, duration: 0.2 }}
+            key="main-menu"
           />
         )}
         {currentPage === DIFFICULTY && (
@@ -30,6 +31,7 @@ function HomePage() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ delay: 0.5, duration: 0.2 }}
+            key="difficulty-menu"
           />
         )}
       </AnimatePresence>

@@ -9,10 +9,10 @@ function App() {
   const { current: currentPage } = useSelector((state) => state.navigation);
 
   return (
-    <AnimatePresence>
-      {currentPage.startsWith(HOME) && <HomePage />}
-      {currentPage.startsWith(GAME) && <GamePage />}
-      {currentPage.startsWith(RULES) && <RulesPage />}
+    <AnimatePresence mode="wait">
+      {currentPage.startsWith(HOME) && <HomePage key="homepage" />}
+      {currentPage.startsWith(GAME) && <GamePage key="gamepage" />}
+      {currentPage.startsWith(RULES) && <RulesPage key="rules" />}
     </AnimatePresence>
   );
 }
