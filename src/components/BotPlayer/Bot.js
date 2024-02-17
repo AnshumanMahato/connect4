@@ -1,7 +1,25 @@
-import { P1, P2 } from '../../store/constants/gameConstants';
 import getChain from '../../utils/getChain';
 
 class Bot {
+  constructor(difficulty, botPiece, playerPiece) {
+    this.difficulty = difficulty;
+    this.botPiece = botPiece;
+    this.playerPiece = playerPiece;
+  }
+  #makeMove(grid, move) {
+    /**
+     * Make a move on the grid
+     * @param {Array} grid - The game grid
+     * @param {Array} move - The move to make
+     * @returns {Array} - The new grid after the move
+     */
+    const next = grid.map((row) => [...row]);
+    const [row, col] = move;
+    next[row][col] = this.botPiece;
+    next[0][col]--;
+    return next;
+  }
+
   #getAvailablePositions(tracker) {
     /**
      * Get the available positions on the grid
@@ -45,8 +63,13 @@ class Bot {
   #evaluateWindow(window) {
     let score = 0;
 
-    const countPlayerPiece = window.filter((cell) => cell === P1).length;
-    const countBotPiece = window.filter((cell) => cell === P2).length;
+    //count the number of pieces in the window
+    const countPlayerPiece = window.filter(
+      (cell) => cell === this.playerPiece
+    ).length;
+    const countBotPiece = window.filter(
+      (cell) => cell === this.botPiece
+    ).length;
     const countEmpty = window.filter((cell) => cell === 0).length;
 
     //Check for 3 in a row for player
@@ -74,7 +97,7 @@ class Bot {
     //as it will be needed for both horizontal and diagonal chains
     const centerCount = grid
       .map((row) => row[4])
-      .filter((cell) => cell === P2).length;
+      .filter((cell) => cell === this.botPiece).length;
     score += centerCount * 3;
 
     //Check horizontal
@@ -127,50 +150,103 @@ class Bot {
     return score;
   }
 
-  play(grid) {
-    //Get available positions
-    const availablePos = this.#getAvailablePositions(grid[0]);
-    let bestMove = [0, 0];
-    let bestScore = -Infinity;
+  #minimax(grid, recentEntry, depth, alpha, beta, isMaximizing) {
+    /**
+     * Minimax algorithm to find the best move
+     * @param {Array} grid - The game grid
+     * @param {Array} recentEntry - The recent entry
+     * @param {Number} depth - The depth of the search
+     * @param {Number} alpha - The alpha value for alpha-beta pruning
+     * @param {Number} beta - The beta value for alpha-beta pruning
+     * @param {Boolean} isMaximizing - True if the current player is the maximizer
+     * @returns {Object} - The best move and the score
+     */
 
-    //Loop through the available positions to find the best possible move
-    availablePos.every((col) => {
-      const row = grid[0][col];
-      const recentEntry = [row, col];
+    if (this.#isWinningMove(grid, recentEntry)) {
+      //If current player is the maximizer then the previous move was from the minimizing player and vice versa
+      return { move: null, score: isMaximizing ? -Infinity : Infinity };
+    } else if (this.#isDraw(grid)) {
+      return { move: null, score: 0 };
+    } else if (depth === 0) {
+      return { move: null, score: this.#getScore(grid) };
+    } else {
+      //DFS until the depth is 0 or a terminal state is reached
+      const availablePos = this.#getAvailablePositions(grid[0]);
+      let bestMove = [0, 0];
+      if (isMaximizing) {
+        //get next move with maximum score
+        let maxScore = -Infinity;
+        for (let i = 0; i < availablePos.length; i++) {
+          const col = availablePos[i];
+          const row = grid[0][col];
+          const move = [row, col];
+          const next = this.#makeMove(grid, move);
+          const { score } = this.#minimax(
+            next,
+            move,
+            depth - 1,
+            alpha,
+            beta,
+            false
+          );
+          if (score > maxScore) {
+            maxScore = score;
+            bestMove = move;
+          }
 
-      //Simulate the move
-      const next = grid.map((row) => [...row]);
-      next[row][col] = P2;
-      next[0][col]--;
+          //alpha-beta pruning
+          alpha = Math.max(alpha, score);
+          if (beta <= alpha) break;
+        }
+        return { move: bestMove, score: maxScore };
+      } else {
+        //get next move with minimum score
+        let minScore = Infinity;
+        for (let i = 0; i < availablePos.length; i++) {
+          const col = availablePos[i];
+          const row = grid[0][col];
+          const move = [row, col];
+          const next = this.#makeMove(grid, move);
+          const { score } = this.#minimax(
+            next,
+            move,
+            depth - 1,
+            alpha,
+            beta,
+            true
+          );
+          if (score < minScore) {
+            minScore = score;
+            bestMove = move;
+          }
 
-      let currentScore = 0;
-      //Check if the move is the winning move
-      if (this.#isWinningMove(next, recentEntry)) {
-        bestMove = [row, col];
-        console.log('winning move');
-        //Return false to break the loop
-        return false;
+          //alpha-beta pruning
+          beta = Math.min(beta, score);
+          if (beta <= alpha) break;
+        }
+        return { move: bestMove, score: minScore };
       }
-      //Check if the move is a draw
-      else if (this.#isDraw(next)) {
-        console.log('draw move');
-        currentScore = 0;
-      }
-      //Get the score of the move
-      else {
-        currentScore = this.#getScore(next);
-        console.log('currentScore', currentScore);
-      }
+    }
+  }
 
-      if (currentScore > bestScore) {
-        bestScore = currentScore;
-        bestMove = [row, col];
-      }
-      return true;
-    });
+  play(grid, recentEntry) {
+    /**
+     * Get the best move for the bot
+     * @param {Array} grid - The game grid
+     * @param {Array} recentEntry - The recent entry
+     * @returns {Array} - The best move for the bot
+     */
+    const { move: bestMove } = this.#minimax(
+      grid,
+      recentEntry,
+      this.difficulty,
+      -Infinity,
+      Infinity,
+      true
+    );
 
     return bestMove;
   }
 }
 
-export default new Bot();
+export default Bot;
