@@ -161,6 +161,9 @@ class Bot {
      * @param {Boolean} isMaximizing - True if the current player is the maximizer
      * @returns {Object} - The best move and the score
      */
+    console.log('Depth:', depth);
+    console.log('Recent Entry:', recentEntry);
+    console.log('Grid:', grid);
 
     if (this.#isWinningMove(grid, recentEntry)) {
       //If current player is the maximizer then the previous move was from the minimizing player and vice versa
@@ -236,7 +239,9 @@ class Bot {
      * @param {Array} recentEntry - The recent entry
      * @returns {Array} - The best move for the bot
      */
-    const { move: bestMove } = this.#minimax(
+    if (!recentEntry) return [grid[0][4], 4];
+
+    const { move: bestMove, score } = this.#minimax(
       grid,
       recentEntry,
       this.difficulty,
@@ -244,6 +249,7 @@ class Bot {
       Infinity,
       true
     );
+    console.log('Bot Score:', score);
 
     return bestMove;
   }

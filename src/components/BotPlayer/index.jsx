@@ -1,15 +1,23 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import bot from './Bot';
+import Bot from './Bot';
 import { insertCounter } from '../../store';
 import easeOutBounce from '../../utils/easeOutBounce';
+import { P1, P2 } from '../../store/constants/gameConstants';
 
 function BotPlayer({ animate }) {
   const dispatch = useDispatch();
-  const { isEvaluating, currentPlayer, grid, currentWinner, isDraw } =
-    useSelector((state) => state.game);
-
+  const {
+    difficulty,
+    recentEntry,
+    currentPlayer,
+    grid,
+    isEvaluating,
+    currentWinner,
+    isDraw,
+  } = useSelector((state) => state.game);
+  const bot = useMemo(() => new Bot(difficulty, P2, P1), [difficulty]);
   const timeout = useRef(null);
 
   useEffect(() => {
@@ -17,7 +25,8 @@ function BotPlayer({ animate }) {
       // Random delay to simulate thinking time for the bot (2-5 seconds)
       const duration = 2000 + parseInt(Math.random() * 3000, 10);
       timeout.current = setTimeout(() => {
-        const [row, col] = bot.play(grid);
+        const [row, col] = bot.play(grid, recentEntry);
+        console.log('Bot played:', row, col);
         dispatch(insertCounter({ col }));
         animate(
           `.cell-${row}-${col}`,
@@ -34,6 +43,8 @@ function BotPlayer({ animate }) {
     isEvaluating,
     isDraw,
     grid,
+    recentEntry,
+    bot,
     dispatch,
     animate,
   ]);
