@@ -40,7 +40,7 @@ function GameBoard({ className }) {
         <BoardBack />
         <CounterGrid />
         <BoardFront />
-        {currentPlayer !== 'cpu' && !isEvaluating && (
+        {currentPlayer !== 'cpu' && !isEvaluating && !currentWinner && (
           <ControlColumns animate={animate} />
         )}
         {currentWinner || isDraw ? (
