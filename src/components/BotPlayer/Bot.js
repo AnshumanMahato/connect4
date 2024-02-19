@@ -6,7 +6,7 @@ class Bot {
     this.botPiece = botPiece;
     this.playerPiece = playerPiece;
   }
-  #makeMove(grid, move) {
+  #makeMove(grid, move, piece) {
     /**
      * Make a move on the grid
      * @param {Array} grid - The game grid
@@ -15,7 +15,7 @@ class Bot {
      */
     const next = grid.map((row) => [...row]);
     const [row, col] = move;
-    next[row][col] = this.botPiece;
+    next[row][col] = piece;
     next[0][col]--;
     return next;
   }
@@ -73,13 +73,13 @@ class Bot {
     const countEmpty = window.filter((cell) => cell === 0).length;
 
     //Check for 3 in a row for player
-    if (countPlayerPiece === 3 && countEmpty === 1) score -= 1000;
+    if (countPlayerPiece === 3 && countEmpty === 1) score -= 4;
     //Check for 2 in a row for player
-    if (countPlayerPiece === 2 && countEmpty === 2) score -= 3;
+    // if (countPlayerPiece === 2 && countEmpty === 2) score -= 3;
     //Check for for 3 in a row for bot
-    if (countBotPiece === 3 && countEmpty === 1) score += 10;
+    if (countBotPiece === 3 && countEmpty === 1) score += 5;
     //Check for 2 in a row for bot
-    if (countBotPiece === 2 && countEmpty === 2) score += 5;
+    if (countBotPiece === 2 && countEmpty === 2) score += 2;
 
     return score;
   }
@@ -161,9 +161,6 @@ class Bot {
      * @param {Boolean} isMaximizing - True if the current player is the maximizer
      * @returns {Object} - The best move and the score
      */
-    console.log('Depth:', depth);
-    console.log('Recent Entry:', recentEntry);
-    console.log('Grid:', grid);
 
     if (this.#isWinningMove(grid, recentEntry)) {
       //If current player is the maximizer then the previous move was from the minimizing player and vice versa
@@ -183,7 +180,7 @@ class Bot {
           const col = availablePos[i];
           const row = grid[0][col];
           const move = [row, col];
-          const next = this.#makeMove(grid, move);
+          const next = this.#makeMove(grid, move, this.botPiece);
           const { score } = this.#minimax(
             next,
             move,
@@ -192,12 +189,14 @@ class Bot {
             beta,
             false
           );
+          if (depth === this.difficulty)
+            console.log(`Maximizer${depth}-${col}: ${score}`);
           if (score > maxScore) {
             maxScore = score;
             bestMove = move;
           }
 
-          //alpha-beta pruning
+          // alpha-beta pruning
           alpha = Math.max(alpha, score);
           if (beta <= alpha) break;
         }
@@ -209,7 +208,7 @@ class Bot {
           const col = availablePos[i];
           const row = grid[0][col];
           const move = [row, col];
-          const next = this.#makeMove(grid, move);
+          const next = this.#makeMove(grid, move, this.playerPiece);
           const { score } = this.#minimax(
             next,
             move,
@@ -218,6 +217,8 @@ class Bot {
             beta,
             true
           );
+          if (depth === this.difficulty)
+            console.log(`Minimizer${depth}-${col}: ${score}`);
           if (score < minScore) {
             minScore = score;
             bestMove = move;
@@ -249,7 +250,10 @@ class Bot {
       Infinity,
       true
     );
-    console.log('Bot Score:', score);
+    if (score === -Infinity) {
+      const availablePos = this.#getAvailablePositions(grid[0]);
+      return [grid[0][availablePos[0]], availablePos[0]];
+    }
 
     return bestMove;
   }
