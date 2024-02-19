@@ -5,6 +5,7 @@ import Bot from './Bot';
 import { insertCounter } from '../../store';
 import easeOutBounce from '../../utils/easeOutBounce';
 import { P1, P2 } from '../../store/constants/gameConstants';
+import { PAUSE } from '../../store/constants/navConatansts';
 
 function BotPlayer({ animate }) {
   const dispatch = useDispatch();
@@ -17,11 +18,18 @@ function BotPlayer({ animate }) {
     currentWinner,
     isDraw,
   } = useSelector((state) => state.game);
+  const { current: currentPage } = useSelector((state) => state.navigation);
   const bot = useMemo(() => new Bot(difficulty, P2, P1), [difficulty]);
   const timeout = useRef(null);
 
   useEffect(() => {
-    if (currentPlayer === 'cpu' && !isEvaluating && !currentWinner && !isDraw) {
+    if (
+      currentPlayer === 'cpu' &&
+      !isEvaluating &&
+      !currentWinner &&
+      !isDraw &&
+      currentPage !== PAUSE
+    ) {
       // Random delay to simulate thinking time for the bot (2-5 seconds)
       const duration = 2000 + parseInt(Math.random() * 3000, 10);
       timeout.current = setTimeout(() => {
@@ -38,6 +46,7 @@ function BotPlayer({ animate }) {
       return () => clearTimeout(timeout.current);
     }
   }, [
+    currentPage,
     currentPlayer,
     currentWinner,
     isEvaluating,
