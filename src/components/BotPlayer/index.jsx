@@ -34,7 +34,6 @@ function BotPlayer({ animate }) {
       const duration = 2000 + parseInt(Math.random() * 3000, 10);
       timeout.current = setTimeout(() => {
         const [row, col] = bot.play(grid, recentEntry);
-        console.log('Bot played:', row, col);
         dispatch(insertCounter({ col }));
         animate(
           `.cell-${row}-${col}`,

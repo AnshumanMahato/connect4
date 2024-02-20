@@ -189,8 +189,6 @@ class Bot {
             beta,
             false
           );
-          if (depth === this.difficulty)
-            console.log(`Maximizer${depth}-${col}: ${score}`);
           if (score > maxScore) {
             maxScore = score;
             bestMove = move;
@@ -217,8 +215,6 @@ class Bot {
             beta,
             true
           );
-          if (depth === this.difficulty)
-            console.log(`Minimizer${depth}-${col}: ${score}`);
           if (score < minScore) {
             minScore = score;
             bestMove = move;
