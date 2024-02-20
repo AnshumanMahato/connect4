@@ -10,7 +10,12 @@ function RulesPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <Rules />
+      <Rules
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
+        transition={{ duration: 0.2 }}
+      />
     </motion.main>
   );
 }

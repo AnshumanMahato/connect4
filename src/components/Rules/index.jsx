@@ -4,7 +4,7 @@ import Panel from '../utils/Panel';
 import './style.scss';
 import { goToHome } from '../../store';
 
-function Rules() {
+function Rules({ ...rest }) {
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -12,7 +12,7 @@ function Rules() {
   };
 
   return (
-    <Panel className="rules">
+    <Panel className="rules" {...rest}>
       <div className="rules__container">
         <h1 className="rules__title">RULES</h1>
         <section className="rules__section">

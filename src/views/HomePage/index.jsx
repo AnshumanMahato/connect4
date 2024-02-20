@@ -21,7 +21,7 @@ function HomePage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            transition={{ delay: 0.3, duration: 0.2 }}
+            transition={{ duration: 0.2 }}
             key="main-menu"
           />
         )}
