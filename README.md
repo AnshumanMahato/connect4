@@ -1,9 +1,3 @@
----
-runme:
-  id: 01HQ5Y6XF0H0FMW88H6WYWXP8F
-  version: v3
----
-
 # Frontend Mentor - Connect Four game solution
 
 This is a solution to the [Connect Four game challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/connect-four-game-6G8QVH923s). 
