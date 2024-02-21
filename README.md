@@ -42,8 +42,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [https://github.com/AnshumanMahato/connect4](https://github.com/AnshumanMahato/connect4)
+- Live Site URL: [https://anshumanmahato.github.io/connect4/](https://anshumanmahato.github.io/connect4/)
 
 ## My process
 
