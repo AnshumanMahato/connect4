@@ -73,9 +73,9 @@ class Bot {
     const countEmpty = window.filter((cell) => cell === 0).length;
 
     //Check for 3 in a row for player
-    if (countPlayerPiece === 3 && countEmpty === 1) score -= 4;
+    if (countPlayerPiece === 3 && countEmpty === 1) score -= 10;
     //Check for 2 in a row for player
-    // if (countPlayerPiece === 2 && countEmpty === 2) score -= 3;
+    if (countPlayerPiece === 2 && countEmpty === 2) score -= 1;
     //Check for for 3 in a row for bot
     if (countBotPiece === 3 && countEmpty === 1) score += 5;
     //Check for 2 in a row for bot
