@@ -4,7 +4,7 @@ import GameBoard from '../../components/GameBoard';
 import GameFooter from '../../components/GameFooter';
 import GameNav from '../../components/GameNav';
 import ScoreCard from '../../components/utils/ScoreCard';
-import PauseMenu from '../../components/PauseMenu';
+import PauseMenu from '../../components/menus/PauseMenu';
 import { PAUSE } from '../../store/constants/navConatansts';
 import './style.scss';
 

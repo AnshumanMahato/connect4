@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import MainMenu from '../../components/MainMenu';
-import DifficultyMenu from '../../components/DifficultyMenu';
+import MainMenu from '../../components/menus/MainMenu';
+import DifficultyMenu from '../../components/menus/DifficultyMenu';
 import { DIFFICULTY, HOME } from '../../store/constants/navConatansts';
 import './style.scss';
 
