@@ -1,0 +1,13 @@
+@use '../base';
+
+.pausemenu {
+  @include base.menu;
+
+  @media only screen and (max-width: 43.75em) {
+    padding: 3rem 2rem;
+
+    &__option {
+      width: 30rem;
+    }
+  }
+}
