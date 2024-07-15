@@ -4,6 +4,7 @@ import {
   GAME,
   HOME,
   PAUSE,
+  PVP_MODE,
   RULES,
 } from '../constants/navConatansts';
 import { restartGame } from './gameSlice';
@@ -19,6 +20,9 @@ const navigationSlice = createSlice({
     },
     goToDifficulty: (state) => {
       state.current = DIFFICULTY;
+    },
+    goToPvpModeMenu: (state) => {
+      state.current = PVP_MODE;
     },
     goToGame: (state) => {
       state.current = GAME;
