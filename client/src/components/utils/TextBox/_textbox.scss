@@ -1,0 +1,42 @@
+.textbox {
+  background-color: var(--color-primary);
+  width: 40rem;
+  height: 7rem;
+  padding: 1.5rem;
+  padding-left: 2rem;
+
+  border: 3px solid #00000076;
+  border-radius: 20px;
+  box-shadow: 0px 10px 0px 0px #00000076;
+  transition: all 0.1s ease-in-out;
+
+  font-family: inherit;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.1rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: var(--color-white);
+  letter-spacing: 4px;
+
+  caret-color: var(--color-white);
+
+  &:focus {
+    outline: none;
+
+    &::placeholder {
+      color: transparent;
+    }
+  }
+
+  &::placeholder {
+    color: var(--color-white);
+    opacity: 0.7;
+  }
+}
