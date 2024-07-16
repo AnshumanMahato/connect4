@@ -5,26 +5,26 @@ import Panel from '../../utils/Panel';
 import { goToGame } from '../../../store';
 import { PVP } from '../../../store/constants/gameConstants';
 
-function DifficultyMenu(props) {
+function PvpModeMenu(props) {
   const dispatch = useDispatch();
   const startGame = useCallback(() => {
     dispatch(goToGame({ mode: PVP }));
   }, [dispatch]);
 
   return (
-    <Panel className="diffmenu" {...props}>
-      <div className="diffmenu__container">
-        <h1 className="diffmenu__title">Mode</h1>
-        <div className="diffmenu__options">
-          <Button className="diffmenu__option" onClick={() => startGame()}>
+    <Panel className="pvpmenu" {...props}>
+      <div className="pvpmenu__container">
+        <h1 className="pvpmenu__title">Mode</h1>
+        <div className="pvpmenu__options">
+          <Button className="pvpmenu__option" onClick={() => startGame()}>
             ONLINE
           </Button>
           <Button
             yellow
-            className="diffmenu__option"
+            className="pvpmenu__option"
             onClick={() => startGame()}
           >
-            DEVICE
+            SAME DEVICE
           </Button>
         </div>
       </div>
@@ -32,4 +32,4 @@ function DifficultyMenu(props) {
   );
 }
 
-export default DifficultyMenu;
+export default PvpModeMenu;

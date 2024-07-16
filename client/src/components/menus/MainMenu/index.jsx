@@ -5,14 +5,14 @@ import Panel from '../../utils/Panel';
 import Logo from '../../../assets/images/logo.svg?react';
 import Pvp from '../../../assets/images/player-vs-player.svg?react';
 import Pve from '../../../assets/images/player-vs-cpu.svg?react';
-import { goToDifficulty, goToGame, goToRules } from '../../../store';
-import { PVP } from '../../../store/constants/gameConstants';
+import { goToDifficulty, goToRules } from '../../../store';
+import { goToPvpModeMenu } from '../../../store/slices/navigationSlice';
 
 function MainMenu(props) {
   const dispatch = useDispatch();
 
   const handlePvpClick = useCallback(() => {
-    dispatch(goToGame({ mode: PVP }));
+    dispatch(goToPvpModeMenu());
   }, [dispatch]);
 
   const handlePveClick = useCallback(() => {

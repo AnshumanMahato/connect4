@@ -41,6 +41,12 @@ const navigationSlice = createSlice({
   },
 });
 
-export const { goToGame, goToHome, goToRules, goToDifficulty, goToPause } =
-  navigationSlice.actions;
+export const {
+  goToGame,
+  goToHome,
+  goToRules,
+  goToDifficulty,
+  goToPause,
+  goToPvpModeMenu,
+} = navigationSlice.actions;
 export default navigationSlice;
