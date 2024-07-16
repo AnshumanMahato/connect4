@@ -1,7 +1,7 @@
 @use '../base';
 
 .mainmenu {
-  @include base.menu;
+  @include base.homepageMenu;
 
   &__option {
     &__icon {
@@ -15,27 +15,6 @@
 
     &--rules {
       justify-content: flex-start;
-    }
-  }
-
-  @media only screen and (max-width: 43.75em) {
-    background-color: transparent;
-    border: none;
-    width: 100vw;
-    box-shadow: none;
-    padding: 0 2rem;
-
-    &__container {
-      width: 100%;
-    }
-
-    &__options {
-      width: min(100%, 40rem);
-      margin-top: 7rem;
-    }
-
-    &__option {
-      width: 100%;
     }
   }
 }
