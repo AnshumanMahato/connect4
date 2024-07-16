@@ -15,6 +15,8 @@ export {
   goToRules,
   goToDifficulty,
   goToPause,
+  goToPvpModeMenu,
+  goToConnect,
 } from './slices/navigationSlice';
 export {
   switchPlayer,

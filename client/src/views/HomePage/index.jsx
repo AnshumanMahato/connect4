@@ -3,11 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import MainMenu from '../../components/menus/MainMenu';
 import DifficultyMenu from '../../components/menus/DifficultyMenu';
 import {
+  CONNECT,
   DIFFICULTY,
   HOME,
   PVP_MODE,
 } from '../../store/constants/navConatansts';
 import PvpModeMenu from '../../components/menus/PvpModeMenu';
+import ConnectMenu from '../../components/menus/ConnectMenu';
 
 function HomePage() {
   const { current: currentPage } = useSelector((state) => state.navigation);
@@ -45,6 +47,15 @@ function HomePage() {
             exit={{ scale: 0 }}
             transition={{ delay: 0.5, duration: 0.2 }}
             key="pvp-mode-menu"
+          />
+        )}
+        {currentPage === CONNECT && (
+          <ConnectMenu
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            transition={{ delay: 0.5, duration: 0.2 }}
+            key="connection-menu"
           />
         )}
       </AnimatePresence>

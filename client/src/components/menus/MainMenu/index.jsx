@@ -5,8 +5,7 @@ import Panel from '../../utils/Panel';
 import Logo from '../../../assets/images/logo.svg?react';
 import Pvp from '../../../assets/images/player-vs-player.svg?react';
 import Pve from '../../../assets/images/player-vs-cpu.svg?react';
-import { goToDifficulty, goToRules } from '../../../store';
-import { goToPvpModeMenu } from '../../../store/slices/navigationSlice';
+import { goToDifficulty, goToRules, goToPvpModeMenu } from '../../../store';
 
 function MainMenu(props) {
   const dispatch = useDispatch();

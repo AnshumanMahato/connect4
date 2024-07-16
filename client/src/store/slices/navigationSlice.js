@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  CONNECT,
   DIFFICULTY,
   GAME,
   HOME,
@@ -23,6 +24,9 @@ const navigationSlice = createSlice({
     },
     goToPvpModeMenu: (state) => {
       state.current = PVP_MODE;
+    },
+    goToConnect: (state) => {
+      state.current = CONNECT;
     },
     goToGame: (state) => {
       state.current = GAME;
@@ -48,5 +52,6 @@ export const {
   goToDifficulty,
   goToPause,
   goToPvpModeMenu,
+  goToConnect,
 } = navigationSlice.actions;
 export default navigationSlice;
