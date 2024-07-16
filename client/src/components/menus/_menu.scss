@@ -4,6 +4,7 @@
 
   &__title {
     color: var(--color-white);
+    text-align: center;
   }
 
   &__container {
@@ -22,6 +23,14 @@
     &:not(:last-child) {
       margin-bottom: 3rem;
     }
+  }
+
+  &__divider {
+    width: 100%;
+    height: 0;
+    border: solid 2px rgba(255, 255, 255, 0.7);
+    border-radius: 99px;
+    margin-bottom: 2rem;
   }
 }
 
