@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import Panel from '../../utils/Panel';
 import Button from '../../utils/Button';
 import { goToGame, goToHome, restartGame } from '../../../store';
-import './style.scss';
 
 function PauseMenu(props) {
   const dispatch = useDispatch();

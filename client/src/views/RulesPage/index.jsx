@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import Rules from '../../components/Rules';
-import './style.scss';
 
 function RulesPage() {
   return (

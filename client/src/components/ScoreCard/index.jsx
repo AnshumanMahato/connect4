@@ -1,10 +1,9 @@
-import Panel from '../Panel';
+import Panel from '../utils/Panel';
 import PropTypes from 'prop-types';
-import Cpu from '../../../assets/images/cpu.svg?react';
-import Player from '../../../assets/images/you.svg?react';
-import Player1 from '../../../assets/images/player-one.svg?react';
-import Player2 from '../../../assets/images/player-two.svg?react';
-import './style.scss';
+import Cpu from '../../assets/images/cpu.svg?react';
+import Player from '../../assets/images/you.svg?react';
+import Player1 from '../../assets/images/player-one.svg?react';
+import Player2 from '../../assets/images/player-two.svg?react';
 
 const Invalid = ({ className }) => (
   <img src="" alt="invalid" className={className} />

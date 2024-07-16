@@ -1,36 +1,32 @@
-.mainmenu {
+@mixin menu {
   background: var(--color-accent);
   padding: 6rem 4rem;
 
-  &_container {
+  &__title {
+    color: var(--color-white);
+  }
+
+  &__container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  &_options {
+  &__options {
     margin-top: 8rem;
   }
 
-  &_option {
-    &__icon {
-      width: 8.2rem;
-      height: 4.6rem;
-    }
+  &__option {
+    justify-content: center;
 
-    &--pvp {
-      justify-content: space-between;
-    }
-
-    &--rules {
-      justify-content: flex-start;
+    &:not(:last-child) {
+      margin-bottom: 3rem;
     }
   }
+}
 
-  &_option:not(:last-child) {
-    margin-bottom: 3rem;
-  }
-
+@mixin homepageMenu {
+  @include menu;
   @media only screen and (max-width: 43.75em) {
     background-color: transparent;
     border: none;
@@ -38,17 +34,21 @@
     box-shadow: none;
     padding: 0 2rem;
 
-    &_container {
+    &__container {
       width: 100%;
     }
 
-    &_options {
+    &__options {
       width: min(100%, 40rem);
       margin-top: 7rem;
     }
 
-    &_option {
+    &__option {
       width: 100%;
     }
   }
 }
+
+@import './DifficultyMenu/difficultyMenu';
+@import './MainMenu/mainMenu';
+@import './PauseMenu/pauseMenu';

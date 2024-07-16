@@ -1,7 +1,5 @@
-@use '../base';
-
 .mainmenu {
-  @include base.homepageMenu;
+  @include homepageMenu;
 
   &__option {
     &__icon {

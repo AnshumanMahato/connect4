@@ -10,7 +10,6 @@ import CounterGrid from './components/CounterGrid';
 import Result from './components/Result';
 import Timer from './components/Timer';
 import { checkWinner } from '../../store';
-import './style.scss';
 import BotPlayer from '../BotPlayer';
 
 function GameBoard({ className }) {

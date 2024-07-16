@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Button from '../utils/Button';
 import Logo from '../../assets/images/logo.svg?react';
 import { goToPause, restartGame } from '../../store';
-import './style.scss';
 
 function GameNav({ className }) {
   const classes = classNames('gamenav', className);

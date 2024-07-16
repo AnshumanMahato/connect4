@@ -9,7 +9,6 @@ import {
   MEDIUM,
   PVE,
 } from '../../../store/constants/gameConstants';
-import './style.scss';
 
 function DifficultyMenu(props) {
   const dispatch = useDispatch();

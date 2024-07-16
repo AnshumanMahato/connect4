@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import Button from '../utils/Button';
 import Panel from '../utils/Panel';
-import './style.scss';
+
 import { goToHome } from '../../store';
 
 function Rules({ ...rest }) {

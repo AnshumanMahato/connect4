@@ -7,7 +7,6 @@ import Pvp from '../../../assets/images/player-vs-player.svg?react';
 import Pve from '../../../assets/images/player-vs-cpu.svg?react';
 import { goToDifficulty, goToGame, goToRules } from '../../../store';
 import { PVP } from '../../../store/constants/gameConstants';
-import './style.scss';
 
 function MainMenu(props) {
   const dispatch = useDispatch();

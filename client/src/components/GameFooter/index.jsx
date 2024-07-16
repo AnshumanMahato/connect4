@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import './style.scss';
 
 function GameFooter({ className, red, yellow }) {
   const classes = classNames(

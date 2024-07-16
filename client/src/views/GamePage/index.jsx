@@ -3,10 +3,9 @@ import { shallowEqual, useSelector } from 'react-redux';
 import GameBoard from '../../components/GameBoard';
 import GameFooter from '../../components/GameFooter';
 import GameNav from '../../components/GameNav';
-import ScoreCard from '../../components/utils/ScoreCard';
+import ScoreCard from '../../components/ScoreCard';
 import PauseMenu from '../../components/menus/PauseMenu';
 import { PAUSE } from '../../store/constants/navConatansts';
-import './style.scss';
 
 function GamePage() {
   const {

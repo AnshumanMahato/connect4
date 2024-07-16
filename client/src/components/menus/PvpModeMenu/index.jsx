@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import Button from '../utils/Button';
-import Panel from '../utils/Panel';
-import { goToGame } from '../../store';
-import { PVP } from '../../store/constants/gameConstants';
-import './style.scss';
+import Button from '../../utils/Button';
+import Panel from '../../utils/Panel';
+import { goToGame } from '../../../store';
+import { PVP } from '../../../store/constants/gameConstants';
 
 function DifficultyMenu(props) {
   const dispatch = useDispatch();
