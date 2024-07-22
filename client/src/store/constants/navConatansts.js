@@ -4,4 +4,6 @@ export const PVP_MODE = 'home/pvp';
 export const CONNECT = 'home/connect';
 export const GAME = 'game';
 export const PAUSE = 'game/pause';
+export const CONNECTING = 'game/connecting';
+export const CONNECTION_FAILED = 'game/connection-failed';
 export const RULES = 'rules';

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import getChain from '../../utils/getChain';
 import markChain from '../../utils/markChain';
-import { goToGame, goToHome } from './navigationSlice';
+import { goToHome } from './navigationSlice';
 import { EASY, PVE, PVP, P1, P2 } from '../constants/gameConstants';
 
 const getNextPlayer = ({ currentPlayer, player1, player2 }) => {
@@ -16,6 +16,7 @@ const getNextPlayer = ({ currentPlayer, player1, player2 }) => {
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
+    player: null,
     mode: PVP,
     difficulty: null,
     player1: 'player1',
@@ -40,6 +41,30 @@ const gameSlice = createSlice({
   reducers: {
     switchPlayer: (state) => {
       state.currentPlayer = getNextPlayer(state);
+    },
+
+    startGame: (state, action) => {
+      const { player, game } = action.payload;
+      const newState = { ...state, ...game, player };
+      return newState;
+    },
+
+    endGame: (state) => {
+      state.player = null;
+      state.currentWinner = null;
+      state.recentEntry = null;
+      state.isDraw = false;
+      state.scoreP1 = 0;
+      state.scoreP2 = 0;
+      state.grid = [
+        [0, 6, 6, 6, 6, 6, 6, 6],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+      ];
     },
 
     insertCounter: (state, action) => {
@@ -150,47 +175,48 @@ const gameSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(goToHome, (state) => {
-      state.currentWinner = null;
-      state.recentEntry = null;
-      state.isDraw = false;
-      state.scoreP1 = 0;
-      state.scoreP2 = 0;
-      state.grid = [
-        [0, 6, 6, 6, 6, 6, 6, 6],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-      ];
-    });
-    builder.addCase(goToGame, (state, action) => {
-      const { mode, difficulty } = action.payload || {};
-      if (!mode) return state;
-
-      state.mode = mode;
-      switch (mode) {
-        case PVE:
-          state.player1 = 'self';
-          state.player2 = 'cpu';
-          state.currentPlayer = 'self';
-          state.difficulty = difficulty || EASY;
-          break;
-        case PVP:
-          state.player1 = 'player1';
-          state.player2 = 'player2';
-          state.currentPlayer = 'player1';
-          state.difficulty = null;
-          break;
-      }
-    });
+    // builder.addCase(goToHome, (state) => {
+    //   state.currentWinner = null;
+    //   state.recentEntry = null;
+    //   state.isDraw = false;
+    //   state.scoreP1 = 0;
+    //   state.scoreP2 = 0;
+    //   state.grid = [
+    //     [0, 6, 6, 6, 6, 6, 6, 6],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //   ];
+    // });
+    // builder.addCase(goToGame, (state, action) => {
+    //   const { mode, difficulty } = action.payload || {};
+    //   if (!mode) return state;
+    //   state.mode = mode;
+    //   switch (mode) {
+    //     case PVE:
+    //       state.player1 = 'self';
+    //       state.player2 = 'cpu';
+    //       state.currentPlayer = 'self';
+    //       state.difficulty = difficulty || EASY;
+    //       break;
+    //     case PVP:
+    //       state.player1 = 'player1';
+    //       state.player2 = 'player2';
+    //       state.currentPlayer = 'player1';
+    //       state.difficulty = null;
+    //       break;
+    //   }
+    // });
   },
 });
 
 export const {
   switchPlayer,
+  startGame,
+  endGame,
   insertCounter,
   checkWinner,
   resetBoard,

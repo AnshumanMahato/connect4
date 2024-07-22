@@ -1,12 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import navigationSlice from './slices/navigationSlice';
 import gameSlice from './slices/gameSlice';
+import socketMiddleware from './middleware/socketMiddleware';
 
 const store = configureStore({
   reducer: {
     [navigationSlice.name]: navigationSlice.reducer,
     [gameSlice.name]: gameSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      socketMiddleware()
+    ),
 });
 
 export {
@@ -17,6 +22,7 @@ export {
   goToPause,
   goToPvpModeMenu,
   goToConnect,
+  connectionError,
 } from './slices/navigationSlice';
 export {
   switchPlayer,

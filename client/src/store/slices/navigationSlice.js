@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   CONNECT,
+  CONNECTING,
+  CONNECTION_FAILED,
   DIFFICULTY,
   GAME,
   HOME,
@@ -8,7 +10,7 @@ import {
   PVP_MODE,
   RULES,
 } from '../constants/navConatansts';
-import { restartGame } from './gameSlice';
+import { endGame, restartGame, startGame } from './gameSlice';
 
 const navigationSlice = createSlice({
   name: 'navigation',
@@ -29,7 +31,10 @@ const navigationSlice = createSlice({
       state.current = CONNECT;
     },
     goToGame: (state) => {
-      state.current = GAME;
+      state.current = CONNECTING;
+    },
+    connectionError: (state) => {
+      state.current = CONNECTION_FAILED;
     },
     goToPause: (state) => {
       state.current = PAUSE;
@@ -39,6 +44,12 @@ const navigationSlice = createSlice({
     },
   },
   extraReducers(builder) {
+    builder.addCase(startGame, (state) => {
+      state.current = GAME;
+    });
+    builder.addCase(endGame, (state) => {
+      state.current = HOME;
+    });
     builder.addCase(restartGame, (state) => {
       state.current = GAME;
     });
@@ -53,5 +64,6 @@ export const {
   goToPause,
   goToPvpModeMenu,
   goToConnect,
+  connectionError,
 } = navigationSlice.actions;
 export default navigationSlice;
