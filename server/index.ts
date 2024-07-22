@@ -2,6 +2,11 @@ import { createServer } from "http";
 import express from "express";
 import { Server } from "socket.io";
 import { v4 as uuidv4 } from "uuid";
+import Difficulty from "./@types/Difficulty.js";
+import PvpGame from "./models/PvpGame.js";
+import CpuGame from "./models/CpuGame.js";
+import { startNewGame } from "./controllers/gameFactory.js";
+import { log } from "console";
 
 const app = express();
 const server = createServer(app);
@@ -9,32 +14,53 @@ const io = new Server(server, {
   cors: {
     origin: "*",
   },
+  connectionStateRecovery: {},
 });
 
-const users = new Map<string, string>();
+const games = new Map<string, PvpGame | CpuGame>();
 
 io.on("connection", async (socket) => {
   console.log("a user connected");
+  console.log(games);
+  const messages = new Set<string>();
 
-  socket.on("join", () => {
-    console.log("user joined");
-    const userId = uuidv4();
-    users.set(userId, socket.id);
-    socket.emit("userId", { userId });
-  });
+  socket.on(
+    "join",
+    (
+      msgOffset: string,
+      payload: { mode?: string; difficulty?: Difficulty },
+      callback
+    ) => {
+      console.log("user joined", socket.id);
+      if (messages.has(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+      messages.add(msgOffset);
+      const player = uuidv4();
+      const { mode, difficulty } = payload || {};
+      if (!mode)
+        return callback({
+          status: "error",
+          message: "mode is required",
+        });
 
-  socket.on("rejoin", (data) => {
-    console.log("user rejoin");
-    users.set(data.userId, socket.id);
+      const newGame = startNewGame(mode, difficulty);
+      games.set(player, newGame);
+
+      socket.emit("startGame", { player, game: newGame });
+      callback({
+        status: "ok",
+      });
+    }
+  );
+
+  socket.on("endGame", ({ player }: { player: string }, callback) => {
+    console.log("game ended", player);
+    games.delete(player);
+    callback({ status: "ok" });
   });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
-    users.forEach((value, key) => {
-      if (value === socket.id) {
-        users.delete(key);
-      }
-    });
   });
 });
 
