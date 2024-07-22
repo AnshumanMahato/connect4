@@ -11,9 +11,7 @@ import {
   PAUSE,
 } from '../../store/constants/navConatansts';
 import Notification from '../../components/Notification';
-import { connectionFailed, goToHome, connectGame } from '../../store';
-import { useEffect } from 'react';
-import io from 'socket.io-client';
+import { goToHome } from '../../store';
 
 function GamePage() {
   const {
@@ -22,42 +20,13 @@ function GamePage() {
     scoreP1,
     scoreP2,
     current: currentPage,
-    connection,
   } = useSelector((state) => {
-    const { player1, player2, scoreP1, scoreP2, connection } = state.game;
+    const { player1, player2, scoreP1, scoreP2 } = state.game;
     const { current } = state.navigation;
-    return { player1, player2, scoreP1, scoreP2, current, connection };
+    return { player1, player2, scoreP1, scoreP2, current };
   }, shallowEqual);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    let { playerId } = connection;
-
-    const socket = io(import.meta.env.VITE_SOCKET_URL);
-
-    socket.on('connect', () => {
-      if (!playerId) socket.emit('join');
-      else socket.emit('rejoin', { userId: playerId });
-    });
-
-    socket.on('userId', ({ userId }) => {
-      const newConnection = { ...connection, playerId: userId };
-      dispatch(connectGame(newConnection));
-    });
-
-    socket.on('connect_error', () => {
-      if (!socket.active) dispatch(connectionFailed());
-    });
-
-    socket.on('disconnect', () => {
-      console.log('disconnected');
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [connection, dispatch]);
 
   return (
     <motion.main
