@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import Panel from '../../utils/Panel';
 import Button from '../../utils/Button';
 import { goToGame, goToHome, restartGame } from '../../../store';
+import { endGame } from '../../../store/slices/gameSlice';
 
 function PauseMenu(props) {
   const dispatch = useDispatch();
 
-  const handleQuit = useCallback(() => dispatch(goToHome()), [dispatch]);
+  const handleQuit = useCallback(() => dispatch(endGame()), [dispatch]);
   const handleClose = useCallback(() => dispatch(goToGame()), [dispatch]);
   const handleRestart = useCallback(() => dispatch(restartGame()), [dispatch]);
 
