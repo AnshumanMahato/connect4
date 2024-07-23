@@ -40,7 +40,6 @@ io.on("connection", async (socket) => {
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      console.log("user joined", socket.id);
       const player = uuidv4();
       const { mode, difficulty } = payload || {};
       if (!mode)
@@ -52,6 +51,7 @@ io.on("connection", async (socket) => {
       const newGame = startNewGame(mode, difficulty);
       games.set(player, newGame);
 
+      console.log("user joined", player);
       socket.emit("startGame", { player, game: newGame });
       callback({
         status: "ok",
@@ -60,30 +60,49 @@ io.on("connection", async (socket) => {
   );
 
   socket.on(
-    "pauseGame",
+    "pauseRequest",
     (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      console.log("game paused", player);
       const game = games.get(player);
       if (!game)
         return callback({ status: "error", message: "game not found" });
       // game.pause();
+      console.log("game paused", player);
+      socket.emit("pauseGame");
       callback({ status: "ok" });
     }
   );
 
   socket.on(
-    "endGame",
+    "continueRequest",
     (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      console.log("game ended", player);
+      const game = games.get(player);
+      if (!game)
+        return callback({ status: "error", message: "game not found" });
+      // game.pause();
+      console.log("game continued", player);
+      socket.emit("continueGame");
+      callback({ status: "ok" });
+    }
+  );
+
+  socket.on(
+    "leave",
+    (msgOffset: string, { player }: { player: string }, callback) => {
+      // check if message is new
+      if (!isNewMessage(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+
+      console.log("user left", player);
       games.delete(player);
+      socket.emit("endGame");
       callback({ status: "ok" });
     }
   );
