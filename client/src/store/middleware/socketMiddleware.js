@@ -10,6 +10,7 @@ import {
   pauseGame,
   playGame,
   quitGame,
+  restartGame,
 } from '../slices/gameSlice';
 
 const socketMiddleware = () => {
@@ -77,6 +78,14 @@ const socketMiddleware = () => {
         if (socket !== null) {
           const { player } = store.getState().game;
           socket.emit('continueRequest', `${socket.id}-${msgOffset++}`, {
+            player,
+          });
+        }
+        break;
+      case restartGame.type:
+        if (socket !== null) {
+          const { player } = store.getState().game;
+          socket.emit('restartRequest', `${socket.id}-${msgOffset++}`, {
             player,
           });
         }
