@@ -1,16 +1,26 @@
 import io from 'socket.io-client';
-import { connectionError, goToGame, goToHome } from '../slices/navigationSlice';
-import { endGame, startGame } from '../slices/gameSlice';
+import {
+  connectionError,
+  goToGame,
+  goToPause,
+} from '../slices/navigationSlice';
+import {
+  continueGame,
+  endGame,
+  pauseGame,
+  playGame,
+  quitGame,
+} from '../slices/gameSlice';
 
 const socketMiddleware = () => {
   let socket = null;
+  let msgOffset = 0;
 
   return (store) => (next) => (action) => {
     switch (action.type) {
-      case goToGame.type:
-        if (socket === null) {
-          let msgOffset = 0;
-
+      case playGame.type:
+        if (!socket) {
+          msgOffset = 0;
           socket = io(import.meta.env.VITE_SOCKET_URL, {
             ackTimeout: 5000,
             retries: 12,
@@ -29,7 +39,21 @@ const socketMiddleware = () => {
           });
 
           socket.on('startGame', (data) => {
-            store.dispatch(startGame(data));
+            store.dispatch(goToGame(data));
+          });
+
+          socket.on('pauseGame', () => {
+            store.dispatch(goToPause());
+          });
+
+          socket.on('continueGame', () => {
+            store.dispatch(goToGame());
+          });
+
+          socket.on('endGame', () => {
+            socket.disconnect();
+            socket = null;
+            store.dispatch(endGame());
           });
 
           socket.on('connect_error', (error) => {
@@ -41,16 +65,26 @@ const socketMiddleware = () => {
           });
         }
         break;
-      case endGame.type:
+      case pauseGame.type:
         if (socket !== null) {
           const { player } = store.getState().game;
-          socket.emit('endGame', { player }, (err, res) => {
-            console.log(res);
-            if (res.status === 'ok') {
-              socket.disconnect();
-              socket = null;
-            }
+          socket.emit('pauseRequest', `${socket.id}-${msgOffset++}`, {
+            player,
           });
+        }
+        break;
+      case continueGame.type:
+        if (socket !== null) {
+          const { player } = store.getState().game;
+          socket.emit('continueRequest', `${socket.id}-${msgOffset++}`, {
+            player,
+          });
+        }
+        break;
+      case quitGame.type:
+        if (socket !== null) {
+          const { player } = store.getState().game;
+          socket.emit('leave', `${socket.id}-${msgOffset++}`, { player });
         }
         break;
       // Example: Emitting an event in response to a Redux action
