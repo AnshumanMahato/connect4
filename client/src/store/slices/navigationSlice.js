@@ -47,6 +47,9 @@ const navigationSlice = createSlice({
     builder.addCase(playGame, (state) => {
       state.current = CONNECTING;
     });
+    builder.addCase(restartGame, (state) => {
+      state.current = CONNECTING;
+    });
     builder.addCase(startGame, (state) => {
       state.current = GAME;
     });

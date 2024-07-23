@@ -158,23 +158,23 @@ const gameSlice = createSlice({
       ];
     },
 
-    restartGame: (state) => {
-      state.currentWinner = null;
-      state.recentEntry = null;
-      state.isDraw = false;
-      state.scoreP1 = 0;
-      state.scoreP2 = 0;
-      state.currentPlayer = getNextPlayer(state);
-      state.grid = [
-        [0, 6, 6, 6, 6, 6, 6, 6],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-      ];
-    },
+    // restartGame: (state) => {
+    //   state.currentWinner = null;
+    //   state.recentEntry = null;
+    //   state.isDraw = false;
+    //   state.scoreP1 = 0;
+    //   state.scoreP2 = 0;
+    //   state.currentPlayer = getNextPlayer(state);
+    //   state.grid = [
+    //     [0, 6, 6, 6, 6, 6, 6, 6],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0],
+    //   ];
+    // },
   },
   extraReducers(builder) {
     // builder.addCase(goToHome, (state) => {
@@ -206,6 +206,7 @@ export const playGame = createAction('game/play');
 export const quitGame = createAction('game/quit');
 export const pauseGame = createAction('game/pause');
 export const continueGame = createAction('game/continue');
+export const restartGame = createAction('game/restart');
 
 export const {
   switchPlayer,
@@ -214,6 +215,5 @@ export const {
   insertCounter,
   checkWinner,
   resetBoard,
-  restartGame,
 } = gameSlice.actions;
 export default gameSlice;
