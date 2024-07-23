@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Button from '../../utils/Button';
 import Panel from '../../utils/Panel';
-import { goToGame } from '../../../store';
+import { playGame } from '../../../store';
 import {
   EASY,
   HARD,
@@ -14,7 +14,7 @@ function DifficultyMenu(props) {
   const dispatch = useDispatch();
   const startGame = useCallback(
     (difficulty) => {
-      dispatch(goToGame({ mode: PVE, difficulty }));
+      dispatch(playGame({ mode: PVE, difficulty }));
     },
     [dispatch]
   );

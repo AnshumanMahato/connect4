@@ -30,5 +30,10 @@ export {
   checkWinner,
   resetBoard,
   restartGame,
+  playGame,
+  startGame,
+  quitGame,
+  pauseGame,
+  continueGame,
 } from './slices/gameSlice';
 export default store;

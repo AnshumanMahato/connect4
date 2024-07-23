@@ -4,14 +4,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from '../utils/Button';
 import Logo from '../../assets/images/logo.svg?react';
-import { goToPause, restartGame } from '../../store';
+import { pauseGame, restartGame } from '../../store';
 
 function GameNav({ className }) {
   const classes = classNames('gamenav', className);
 
   const dispatch = useDispatch();
 
-  const handleMenuClick = useCallback(() => dispatch(goToPause()), [dispatch]);
+  const handleMenuClick = useCallback(() => dispatch(pauseGame()), [dispatch]);
   const handleRestart = useCallback(() => dispatch(restartGame()), [dispatch]);
 
   return (

@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import getChain from '../../utils/getChain';
 import markChain from '../../utils/markChain';
-import { goToHome } from './navigationSlice';
-import { EASY, PVE, PVP, P1, P2 } from '../constants/gameConstants';
+import { PVP, P1, P2 } from '../constants/gameConstants';
+import { goToGame } from './navigationSlice';
 
 const getNextPlayer = ({ currentPlayer, player1, player2 }) => {
   switch (currentPlayer) {
@@ -51,6 +51,8 @@ const gameSlice = createSlice({
 
     endGame: (state) => {
       state.player = null;
+      state.mode = PVP;
+      state.currentPlayer = 'player1';
       state.currentWinner = null;
       state.recentEntry = null;
       state.isDraw = false;
@@ -191,27 +193,19 @@ const gameSlice = createSlice({
     //     [0, 0, 0, 0, 0, 0, 0, 0],
     //   ];
     // });
-    // builder.addCase(goToGame, (state, action) => {
-    //   const { mode, difficulty } = action.payload || {};
-    //   if (!mode) return state;
-    //   state.mode = mode;
-    //   switch (mode) {
-    //     case PVE:
-    //       state.player1 = 'self';
-    //       state.player2 = 'cpu';
-    //       state.currentPlayer = 'self';
-    //       state.difficulty = difficulty || EASY;
-    //       break;
-    //     case PVP:
-    //       state.player1 = 'player1';
-    //       state.player2 = 'player2';
-    //       state.currentPlayer = 'player1';
-    //       state.difficulty = null;
-    //       break;
-    //   }
-    // });
+    builder.addCase(goToGame, (state, action) => {
+      if (!action.payload) return state;
+      const { player, game } = action.payload;
+      const newState = { ...state, ...game, player };
+      return newState;
+    });
   },
 });
+
+export const playGame = createAction('game/play');
+export const quitGame = createAction('game/quit');
+export const pauseGame = createAction('game/pause');
+export const continueGame = createAction('game/continue');
 
 export const {
   switchPlayer,

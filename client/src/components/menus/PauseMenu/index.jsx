@@ -2,14 +2,16 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Panel from '../../utils/Panel';
 import Button from '../../utils/Button';
-import { goToGame, goToHome, restartGame } from '../../../store';
-import { endGame } from '../../../store/slices/gameSlice';
+import { continueGame, quitGame, restartGame } from '../../../store';
 
 function PauseMenu(props) {
   const dispatch = useDispatch();
 
-  const handleQuit = useCallback(() => dispatch(endGame()), [dispatch]);
-  const handleClose = useCallback(() => dispatch(goToGame()), [dispatch]);
+  const handleQuit = useCallback(() => dispatch(quitGame()), [dispatch]);
+  const handleContinue = useCallback(
+    () => dispatch(continueGame()),
+    [dispatch]
+  );
   const handleRestart = useCallback(() => dispatch(restartGame()), [dispatch]);
 
   return (
@@ -17,7 +19,7 @@ function PauseMenu(props) {
       <div className="pausemenu__container">
         <h1 className="pausemenu__title">PAUSE</h1>
         <div className="pausemenu__options">
-          <Button onClick={handleClose} className="pausemenu__option">
+          <Button onClick={handleContinue} className="pausemenu__option">
             Continue Game
           </Button>
           <Button onClick={handleRestart} className="pausemenu__option">

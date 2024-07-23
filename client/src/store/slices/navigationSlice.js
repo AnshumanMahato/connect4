@@ -10,7 +10,7 @@ import {
   PVP_MODE,
   RULES,
 } from '../constants/navConatansts';
-import { endGame, restartGame, startGame } from './gameSlice';
+import { endGame, playGame, restartGame, startGame } from './gameSlice';
 
 const navigationSlice = createSlice({
   name: 'navigation',
@@ -31,7 +31,7 @@ const navigationSlice = createSlice({
       state.current = CONNECT;
     },
     goToGame: (state) => {
-      state.current = CONNECTING;
+      state.current = GAME;
     },
     connectionError: (state) => {
       state.current = CONNECTION_FAILED;
@@ -44,6 +44,9 @@ const navigationSlice = createSlice({
     },
   },
   extraReducers(builder) {
+    builder.addCase(playGame, (state) => {
+      state.current = CONNECTING;
+    });
     builder.addCase(startGame, (state) => {
       state.current = GAME;
     });
