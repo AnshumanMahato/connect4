@@ -94,6 +94,24 @@ io.on("connection", async (socket) => {
   );
 
   socket.on(
+    "restartRequest",
+    (msgOffset: string, { player }: { player: string }, callback) => {
+      // check if message is new
+      if (!isNewMessage(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+
+      const game = games.get(player);
+      if (!game)
+        return callback({ status: "error", message: "game not found" });
+      //TODO: Test this after win and draw conditions are implemented. we may need to update the map.
+      game.restart();
+      console.log("game restarted", player);
+      socket.emit("startGame", { player, game });
+      callback({ status: "ok" });
+    }
+  );
+
+  socket.on(
     "leave",
     (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
@@ -107,8 +125,8 @@ io.on("connection", async (socket) => {
     }
   );
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+  socket.on("disconnect", (reason) => {
+    console.log("user disconnected", reason);
   });
 });
 

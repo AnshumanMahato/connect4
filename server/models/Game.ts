@@ -33,6 +33,23 @@ abstract class Game {
       [0, 0, 0, 0, 0, 0, 0, 0],
     ];
   }
+
+  restart() {
+    this.currentWinner = null;
+    this.recentEntry = null;
+    this.isDraw = false;
+    this.scoreP1 = 0;
+    this.scoreP2 = 0;
+    this.grid = [
+      [0, 6, 6, 6, 6, 6, 6, 6],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+  }
 }
 
 export default Game;
