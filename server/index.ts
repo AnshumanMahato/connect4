@@ -18,11 +18,16 @@ const io = new Server(server, {
 });
 
 const games = new Map<string, PvpGame | CpuGame>();
+const messages = new Set<string>();
+
+const isNewMessage = (msgOffset: string) => {
+  if (messages.has(msgOffset)) return false;
+  messages.add(msgOffset);
+  return true;
+};
 
 io.on("connection", async (socket) => {
   console.log("a user connected");
-  console.log(games);
-  const messages = new Set<string>();
 
   socket.on(
     "join",
@@ -31,10 +36,11 @@ io.on("connection", async (socket) => {
       payload: { mode?: string; difficulty?: Difficulty },
       callback
     ) => {
-      console.log("user joined", socket.id);
-      if (messages.has(msgOffset))
+      // check if message is new
+      if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
-      messages.add(msgOffset);
+
+      console.log("user joined", socket.id);
       const player = uuidv4();
       const { mode, difficulty } = payload || {};
       if (!mode)
@@ -53,11 +59,34 @@ io.on("connection", async (socket) => {
     }
   );
 
-  socket.on("endGame", ({ player }: { player: string }, callback) => {
-    console.log("game ended", player);
-    games.delete(player);
-    callback({ status: "ok" });
-  });
+  socket.on(
+    "pauseGame",
+    (msgOffset: string, { player }: { player: string }, callback) => {
+      // check if message is new
+      if (!isNewMessage(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+
+      console.log("game paused", player);
+      const game = games.get(player);
+      if (!game)
+        return callback({ status: "error", message: "game not found" });
+      // game.pause();
+      callback({ status: "ok" });
+    }
+  );
+
+  socket.on(
+    "endGame",
+    (msgOffset: string, { player }: { player: string }, callback) => {
+      // check if message is new
+      if (!isNewMessage(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+
+      console.log("game ended", player);
+      games.delete(player);
+      callback({ status: "ok" });
+    }
+  );
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
