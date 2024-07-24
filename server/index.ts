@@ -6,7 +6,6 @@ import Difficulty from "./@types/Difficulty.js";
 import PvpGame from "./models/PvpGame.js";
 import CpuGame from "./models/CpuGame.js";
 import { startNewGame } from "./controllers/gameFactory.js";
-import { log } from "console";
 
 const app = express();
 const server = createServer(app);
@@ -52,7 +51,16 @@ io.on("connection", async (socket) => {
       games.set(player, newGame);
 
       console.log("user joined", player);
-      socket.emit("startGame", { player, game: newGame });
+      //timer will start only if game is started at client side
+      socket.emit(
+        "startGame",
+        { player, game: newGame },
+        ({ status }: { status: string }) => {
+          if (status === "game_started") {
+            newGame.startTimer(socket);
+          }
+        }
+      );
       callback({
         status: "ok",
       });
@@ -69,7 +77,7 @@ io.on("connection", async (socket) => {
       const game = games.get(player);
       if (!game)
         return callback({ status: "error", message: "game not found" });
-      // game.pause();
+      game.stopTimer();
       console.log("game paused", player);
       socket.emit("pauseGame");
       callback({ status: "ok" });
@@ -86,9 +94,14 @@ io.on("connection", async (socket) => {
       const game = games.get(player);
       if (!game)
         return callback({ status: "error", message: "game not found" });
-      // game.pause();
       console.log("game continued", player);
-      socket.emit("continueGame");
+      //timer will start only if game is started at client side
+      socket.emit("continueGame", ({ status }: { status: string }) => {
+        console.log("status", status);
+        if (status === "game_started") {
+          game.startTimer(socket);
+        }
+      });
       callback({ status: "ok" });
     }
   );
