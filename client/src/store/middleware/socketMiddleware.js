@@ -11,6 +11,8 @@ import {
   playGame,
   quitGame,
   restartGame,
+  switchPlayer,
+  updateTime,
 } from '../slices/gameSlice';
 
 const socketMiddleware = () => {
@@ -39,22 +41,32 @@ const socketMiddleware = () => {
             }
           });
 
-          socket.on('startGame', (data) => {
+          socket.on('startGame', (data, callback) => {
             store.dispatch(goToGame(data));
+            callback({ status: 'game_started' });
           });
 
           socket.on('pauseGame', () => {
             store.dispatch(goToPause());
           });
 
-          socket.on('continueGame', () => {
+          socket.on('continueGame', (callback) => {
             store.dispatch(goToGame());
+            callback({ status: 'game_started' });
           });
 
           socket.on('endGame', () => {
             socket.disconnect();
             socket = null;
             store.dispatch(endGame());
+          });
+
+          socket.on('timer', (data) => {
+            store.dispatch(updateTime(data.time));
+          });
+
+          socket.on('switchPlayer', (data) => {
+            store.dispatch(switchPlayer(data));
           });
 
           socket.on('connect_error', (error) => {
