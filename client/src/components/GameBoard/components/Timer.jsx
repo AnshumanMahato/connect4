@@ -1,42 +1,13 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import TimerBgRed from '../../../assets/images/turn-background-red.svg?react';
 import TimerBgYellow from '../../../assets/images/turn-background-yellow.svg?react';
-import { switchPlayer } from '../../../store';
-import { PAUSE } from '../../../store/constants/navConatansts';
 
-function Timer({ className, duration }) {
+function Timer({ className }) {
   const classes = classNames('timer', className);
 
-  const dispatch = useDispatch();
-  const { currentPlayer } = useSelector((state) => state.game);
-  const { current: currentPage } = useSelector((state) => state.navigation);
-
-  const interval = useRef(null);
-  const prevPlayer = useRef(currentPlayer);
-  let [time, setTime] = useState(duration);
-
-  useEffect(() => {
-    if (prevPlayer.current !== currentPlayer) {
-      //Reset timer when current player changes
-      prevPlayer.current = currentPlayer;
-      setTime(duration);
-    }
-    //timer works only when game is not paused
-    if (currentPage !== PAUSE) {
-      interval.current = setTimeout(() => {
-        if (time === 0) {
-          //switch player when time ends
-          dispatch(switchPlayer());
-        }
-        setTime((currTime) => currTime - 1);
-      }, 1000);
-    }
-
-    return () => clearTimeout(interval.current);
-  }, [time, duration, currentPlayer, currentPage, dispatch]);
+  const { currentPlayer, time } = useSelector((state) => state.game);
 
   let timerTitle, TimerBackground;
   switch (currentPlayer) {
@@ -73,7 +44,6 @@ function Timer({ className, duration }) {
 
 Timer.propTypes = {
   className: PropTypes.string,
-  duration: PropTypes.number.isRequired,
 };
 
 export default Timer;

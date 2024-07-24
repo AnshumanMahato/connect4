@@ -28,6 +28,7 @@ const gameSlice = createSlice({
     isDraw: false,
     currentWinner: null,
     recentEntry: null,
+    time: 30,
     grid: [
       [0, 6, 6, 6, 6, 6, 6, 6],
       [0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,9 +40,9 @@ const gameSlice = createSlice({
     ],
   },
   reducers: {
-    switchPlayer: (state) => {
-      state.currentPlayer = getNextPlayer(state);
-    },
+    // switchPlayer: (state) => {
+    //   state.currentPlayer = getNextPlayer(state);
+    // },
 
     startGame: (state, action) => {
       const { player, game } = action.payload;
@@ -67,6 +68,14 @@ const gameSlice = createSlice({
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
       ];
+    },
+
+    updateTime: (state, action) => {
+      state.time = action.payload;
+    },
+
+    switchPlayer: (state, action) => {
+      return { ...state, ...action.payload };
     },
 
     insertCounter: (state, action) => {
@@ -215,5 +224,7 @@ export const {
   insertCounter,
   checkWinner,
   resetBoard,
+  updateTime,
+  setCurrentPlayer,
 } = gameSlice.actions;
 export default gameSlice;
