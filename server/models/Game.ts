@@ -41,7 +41,7 @@ abstract class Game {
     ];
   }
 
-  #switchPlayer(socket: Socket) {
+  switchPlayer(socket: Socket) {
     this.currentPlayer =
       this.currentPlayer === this.player1 ? this.player2 : this.player1;
     this.time = 30;
@@ -55,7 +55,7 @@ abstract class Game {
     this.#timer = setInterval(() => {
       this.time--;
       if (this.time < 0) {
-        this.#switchPlayer(socket);
+        this.switchPlayer(socket);
       } else {
         socket.emit("timer", { time: this.time });
       }
@@ -85,6 +85,24 @@ abstract class Game {
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
     ];
+  }
+
+  makeMove(col: number) {
+    //Check if there is a winner already
+    if (this.currentWinner) return false;
+
+    //Check if the column is full
+    const row = this.grid[0][col];
+    if (!row) return false;
+
+    //Update the grid
+    this.grid[row][col] = this.currentPlayer === this.player1 ? P1 : P2;
+    this.grid[0][col]--;
+    this.recentEntry = [row, col];
+
+    //evaluate the grid
+    this.#evaluate();
+    return true;
   }
 
   #getChain(direction: string): Chain | null {

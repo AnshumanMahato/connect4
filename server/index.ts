@@ -134,6 +134,39 @@ io.on("connection", async (socket) => {
   );
 
   socket.on(
+    "moveRequest",
+    (
+      msgOffset: string,
+      { player, col }: { player: string; col: number },
+      callback
+    ) => {
+      // check if message is new
+      if (!isNewMessage(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+
+      const game = games.get(player);
+      if (!game)
+        return callback({ status: "error", message: "game not found" });
+      game.stopTimer();
+      socket.emit("evaluatingMove");
+      console.log("move requested", player, col);
+      if (game.makeMove(col)) {
+        //update the game state
+        socket.emit("update", { game });
+      } else {
+        socket.emit("invalidMove");
+      }
+      game.switchPlayer(socket);
+      //if game is not over, start the timer
+      if (!game.currentWinner && !game.isDraw) {
+        game.startTimer(socket);
+      }
+
+      callback({ status: "ok" });
+    }
+  );
+
+  socket.on(
     "leave",
     (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
