@@ -75,21 +75,6 @@ const gameSlice = createSlice({
     stopEvaluation: (state) => {
       state.isEvaluating = false;
     },
-
-    resetBoard: (state) => {
-      state.currentWinner = null;
-      state.recentEntry = null;
-      state.isDraw = false;
-      state.grid = [
-        [0, 6, 6, 6, 6, 6, 6, 6],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-      ];
-    },
   },
   extraReducers(builder) {
     // builder.addCase(goToHome, (state) => {
@@ -123,6 +108,7 @@ export const pauseGame = createAction('game/pause');
 export const continueGame = createAction('game/continue');
 export const restartGame = createAction('game/restart');
 export const insertCounter = createAction('game/insertCounter');
+export const playAgain = createAction('game/playAgain');
 
 export const {
   switchPlayer,
@@ -130,7 +116,6 @@ export const {
   stopEvaluation,
   startGame,
   endGame,
-  resetBoard,
   updateTime,
   updateGameState,
 } = gameSlice.actions;

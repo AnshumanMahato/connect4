@@ -27,7 +27,7 @@ export {
 export {
   switchPlayer,
   insertCounter,
-  resetBoard,
+  playAgain,
   restartGame,
   playGame,
   startGame,

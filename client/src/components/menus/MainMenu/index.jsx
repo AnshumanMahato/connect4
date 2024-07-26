@@ -3,16 +3,16 @@ import { useDispatch } from 'react-redux';
 import Button from '../../utils/Button';
 import Panel from '../../utils/Panel';
 import Logo from '../../../assets/images/logo.svg?react';
-import Pvp from '../../../assets/images/player-vs-player.svg?react';
+// import Pvp from '../../../assets/images/player-vs-player.svg?react';
 import Pve from '../../../assets/images/player-vs-cpu.svg?react';
-import { goToDifficulty, goToRules, goToPvpModeMenu } from '../../../store';
+import { goToDifficulty, goToRules /*goToPvpModeMenu*/ } from '../../../store';
 
 function MainMenu(props) {
   const dispatch = useDispatch();
 
-  const handlePvpClick = useCallback(() => {
-    dispatch(goToPvpModeMenu());
-  }, [dispatch]);
+  // const handlePvpClick = useCallback(() => {
+  //   dispatch(goToPvpModeMenu());
+  // }, [dispatch]);
 
   const handlePveClick = useCallback(() => {
     dispatch(goToDifficulty());
@@ -35,14 +35,14 @@ function MainMenu(props) {
             <span>Play vs cpu</span>
             <Pve className="mainmenu__option__icon" />
           </Button>
-          <Button
+          {/*<Button
             yellow
             className="mainmenu__option mainmenu__option--pvp"
             onClick={handlePvpClick}
           >
             <span>Play vs player</span>
             <Pvp className="mainmenu__option__icon" />
-          </Button>
+          </Button>*/}
           <Button
             className="mainmenu__option mainmenu__option--rules"
             onClick={handleRulesClick}

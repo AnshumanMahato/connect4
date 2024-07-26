@@ -9,6 +9,7 @@ import {
   endGame,
   insertCounter,
   pauseGame,
+  playAgain,
   playGame,
   quitGame,
   restartGame,
@@ -115,6 +116,14 @@ const socketMiddleware = () => {
         if (socket !== null) {
           const { player } = store.getState().game;
           socket.emit('restartRequest', `${socket.id}-${msgOffset++}`, {
+            player,
+          });
+        }
+        break;
+      case playAgain.type:
+        if (socket !== null) {
+          const { player } = store.getState().game;
+          socket.emit('playAgainRequest', `${socket.id}-${msgOffset++}`, {
             player,
           });
         }

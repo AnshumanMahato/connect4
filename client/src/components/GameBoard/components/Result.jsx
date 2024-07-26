@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { resetBoard } from '../../../store';
+import { playAgain } from '../../../store';
 import Panel from '../../utils/Panel';
 import Button from '../../utils/Button';
 
@@ -11,7 +11,7 @@ function Result({ className, isDraw, winner }) {
 
   const dispatch = useDispatch();
 
-  const handleReset = useCallback(() => dispatch(resetBoard()), [dispatch]);
+  const handleReset = useCallback(() => dispatch(playAgain()), [dispatch]);
 
   let winnerTitle = ' ';
   if (!isDraw) {
