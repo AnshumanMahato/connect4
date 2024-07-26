@@ -117,9 +117,18 @@ io.on("connection", async (socket) => {
       if (!game)
         return callback({ status: "error", message: "game not found" });
       //TODO: Test this after win and draw conditions are implemented. we may need to update the map.
+      game.stopTimer();
       game.restart();
       console.log("game restarted", player);
-      socket.emit("startGame", { player, game });
+      socket.emit(
+        "startGame",
+        { player, game },
+        ({ status }: { status: string }) => {
+          if (status === "game_started") {
+            game.startTimer(socket);
+          }
+        }
+      );
       callback({ status: "ok" });
     }
   );
