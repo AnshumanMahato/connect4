@@ -107,6 +107,32 @@ io.on("connection", async (socket) => {
   );
 
   socket.on(
+    "playAgainRequest",
+    (msgOffset: string, { player }: { player: string }, callback) => {
+      // check if message is new
+      if (!isNewMessage(msgOffset))
+        return callback({ status: "notmodified", message: "already joined" });
+
+      const game = games.get(player);
+      if (!game)
+        return callback({ status: "error", message: "game not found" });
+      game.stopTimer();
+      game.playAgain();
+      console.log("new game started", player);
+      socket.emit(
+        "startGame",
+        { player, game },
+        ({ status }: { status: string }) => {
+          if (status === "game_started") {
+            game.startTimer(socket);
+          }
+        }
+      );
+      callback({ status: "ok" });
+    }
+  );
+
+  socket.on(
     "restartRequest",
     (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new

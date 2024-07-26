@@ -87,6 +87,21 @@ abstract class Game {
     ];
   }
 
+  playAgain() {
+    this.currentWinner = null;
+    this.recentEntry = null;
+    this.isDraw = false;
+    this.grid = [
+      [0, 6, 6, 6, 6, 6, 6, 6],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+  }
+
   makeMove(col: number) {
     //Check if there is a winner already
     if (this.currentWinner) return false;
