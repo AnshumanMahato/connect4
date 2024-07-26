@@ -7,11 +7,15 @@ import {
 import {
   continueGame,
   endGame,
+  insertCounter,
   pauseGame,
   playGame,
   quitGame,
   restartGame,
+  startEvaluation,
+  stopEvaluation,
   switchPlayer,
+  updateGameState,
   updateTime,
 } from '../slices/gameSlice';
 
@@ -69,6 +73,19 @@ const socketMiddleware = () => {
             store.dispatch(switchPlayer(data));
           });
 
+          socket.on('evaluatingMove', () => {
+            store.dispatch(startEvaluation());
+          });
+
+          socket.on('update', (data) => {
+            store.dispatch(updateGameState(data.game));
+            // callback({ status: 'state_updated' });
+          });
+
+          socket.on('invalidMove', () => {
+            store.dispatch(stopEvaluation());
+          });
+
           socket.on('connect_error', (error) => {
             store.dispatch(connectionError(error));
           });
@@ -109,8 +126,15 @@ const socketMiddleware = () => {
         }
         break;
       // Example: Emitting an event in response to a Redux action
-      case 'game/move':
-        socket.emit('makeMove', action.payload);
+      case insertCounter.type:
+        if (socket !== null) {
+          const { player } = store.getState().game;
+          const { col } = action.payload;
+          socket.emit('moveRequest', `${socket.id}-${msgOffset++}`, {
+            player,
+            col,
+          });
+        }
         break;
       default:
         break;
