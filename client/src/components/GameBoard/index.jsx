@@ -9,13 +9,32 @@ import CounterGrid from './components/CounterGrid';
 import Result from './components/Result';
 import Timer from './components/Timer';
 import BotPlayer from '../BotPlayer';
+import { useEffect } from 'react';
+import easeOutBounce from '../../utils/easeOutBounce';
 
 function GameBoard({ className }) {
   const classes = classNames('gameboard', className);
 
-  const { mode, currentPlayer, currentWinner, isEvaluating, isDraw } =
-    useSelector((state) => state.game);
+  const {
+    mode,
+    recentEntry,
+    currentPlayer,
+    currentWinner,
+    isEvaluating,
+    isDraw,
+  } = useSelector((state) => state.game);
   const [scope, animate] = useAnimate();
+
+  useEffect(() => {
+    if (recentEntry) {
+      const [row, col] = recentEntry;
+      animate(
+        `.cell-${row}-${col}`,
+        { translateY: [`-${row * 130}%`, '0%'] },
+        { duration: 1, ease: easeOutBounce }
+      );
+    }
+  }, [recentEntry, animate]);
 
   return (
     <>

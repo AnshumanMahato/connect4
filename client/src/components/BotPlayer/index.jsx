@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Bot from './Bot';
 import { insertCounter } from '../../store';
-import easeOutBounce from '../../utils/easeOutBounce';
 import { P1, P2 } from '../../store/constants/gameConstants';
 import { PAUSE } from '../../store/constants/navConatansts';
 
@@ -33,13 +32,8 @@ function BotPlayer({ animate }) {
       // Random delay to simulate thinking time for the bot (2-5 seconds)
       const duration = 2000 + parseInt(Math.random() * 3000, 10);
       timeout.current = setTimeout(() => {
-        const [row, col] = bot.play(grid, recentEntry);
+        const col = bot.play(grid, recentEntry)[1];
         dispatch(insertCounter({ col }));
-        animate(
-          `.cell-${row}-${col}`,
-          { translateY: [`-${row * 130}%`, '0%'] },
-          { duration: 1, ease: easeOutBounce }
-        );
       }, duration);
 
       return () => clearTimeout(timeout.current);

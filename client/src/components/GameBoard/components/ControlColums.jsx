@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import MarkerRed from '../../../assets/images/marker-red.svg?react';
 import MarkerYellow from '../../../assets/images/marker-yellow.svg?react';
 import { insertCounter } from '../../../store';
-import easeOutBounce from '../../../utils/easeOutBounce';
 
 function ControlColumns({ animate }) {
   const cols = [1, 2, 3, 4, 5, 6, 7];
@@ -17,13 +16,8 @@ function ControlColumns({ animate }) {
       const row = grid[0][col];
       if (!row) return;
       dispatch(insertCounter({ col }));
-      animate(
-        `.cell-${row}-${col}`,
-        { translateY: [`-${row * 130}%`, '0%'] },
-        { duration: 1, ease: easeOutBounce }
-      );
     },
-    [grid, dispatch, animate]
+    [grid, dispatch]
   );
 
   const handleMouseEnter = useCallback(
