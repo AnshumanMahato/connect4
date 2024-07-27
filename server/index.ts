@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { createServer } from "http";
 import express from "express";
 import { Server } from "socket.io";
@@ -16,6 +17,7 @@ const io = new Server(server, {
   connectionStateRecovery: {},
 });
 
+const playerRooms = new Map<string, string>();
 const games = new Map<string, PvpGame | CpuGame>();
 const messages = new Set<string>();
 
@@ -25,12 +27,12 @@ const isNewMessage = (msgOffset: string) => {
   return true;
 };
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
   console.log("a user connected");
 
   socket.on(
     "join",
-    (
+    async (
       msgOffset: string,
       payload: { mode?: string; difficulty?: Difficulty },
       callback
@@ -40,6 +42,7 @@ io.on("connection", async (socket) => {
         return callback({ status: "notmodified", message: "already joined" });
 
       const player = uuidv4();
+      const room = crypto.randomBytes(3).toString("hex").toUpperCase();
       const { mode, difficulty } = payload || {};
       if (!mode)
         return callback({
@@ -48,19 +51,20 @@ io.on("connection", async (socket) => {
         });
 
       const newGame = startNewGame(mode, difficulty);
-      games.set(player, newGame);
-
+      playerRooms.set(player, room);
+      games.set(room, newGame);
+      await socket.join(room);
       console.log("user joined", player);
       //timer will start only if game is started at client side
-      socket.emit(
-        "startGame",
-        { player, game: newGame },
-        ({ status }: { status: string }) => {
-          if (status === "game_started") {
-            newGame.startTimer(socket);
-          }
-        }
-      );
+      const [res] = await io.to(room).timeout(1000).emitWithAck("startGame", {
+        player,
+        game: newGame,
+      });
+      console.log("game started", player, res);
+
+      if (res.status === "game_started") {
+        await newGame.startTimer(io, room);
+      }
       callback({
         status: "ok",
       });
@@ -69,99 +73,105 @@ io.on("connection", async (socket) => {
 
   socket.on(
     "pauseRequest",
-    (msgOffset: string, { player }: { player: string }, callback) => {
+    async (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      const game = games.get(player);
+      const room = playerRooms.get(player) || "";
+      const game = games.get(room);
       if (!game)
         return callback({ status: "error", message: "game not found" });
       game.stopTimer();
       console.log("game paused", player);
-      socket.emit("pauseGame");
+      await io.to(room).timeout(1000).emitWithAck("pauseGame");
+      console.log(playerRooms, games);
       callback({ status: "ok" });
     }
   );
 
   socket.on(
     "continueRequest",
-    (msgOffset: string, { player }: { player: string }, callback) => {
+    async (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
-
-      const game = games.get(player);
+      console.log("continue requested", player);
+      console.log(playerRooms, games);
+      const room = playerRooms.get(player) || "";
+      const game = games.get(room);
+      console.log("room", room, "game", game);
       if (!game)
         return callback({ status: "error", message: "game not found" });
       console.log("game continued", player);
       //timer will start only if game is started at client side
-      socket.emit("continueGame", ({ status }: { status: string }) => {
-        console.log("status", status);
-        if (status === "game_started") {
-          game.startTimer(socket);
-        }
-      });
+      const [res] = await io.to(room).timeout(1000).emitWithAck("continueGame");
+
+      if (res.status === "game_started") {
+        await game.startTimer(io, room);
+      }
+
       callback({ status: "ok" });
     }
   );
 
   socket.on(
     "playAgainRequest",
-    (msgOffset: string, { player }: { player: string }, callback) => {
+    async (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      const game = games.get(player);
+      const room = playerRooms.get(player) || "";
+      const game = games.get(room);
       if (!game)
         return callback({ status: "error", message: "game not found" });
       game.stopTimer();
       game.playAgain();
       console.log("new game started", player);
-      socket.emit(
-        "startGame",
-        { player, game },
-        ({ status }: { status: string }) => {
-          if (status === "game_started") {
-            game.startTimer(socket);
-          }
-        }
-      );
+      const [res] = await io
+        .to(room)
+        .timeout(1000)
+        .emitWithAck("startGame", { player, game });
+
+      if (res.status === "game_started") {
+        await game.startTimer(io, room);
+      }
+
       callback({ status: "ok" });
     }
   );
 
   socket.on(
     "restartRequest",
-    (msgOffset: string, { player }: { player: string }, callback) => {
+    async (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      const game = games.get(player);
+      const room = playerRooms.get(player) || "";
+      const game = games.get(room);
       if (!game)
         return callback({ status: "error", message: "game not found" });
       //TODO: Test this after win and draw conditions are implemented. we may need to update the map.
       game.stopTimer();
       game.restart();
       console.log("game restarted", player);
-      socket.emit(
-        "startGame",
-        { player, game },
-        ({ status }: { status: string }) => {
-          if (status === "game_started") {
-            game.startTimer(socket);
-          }
-        }
-      );
+      const [res] = await io
+        .to(room)
+        .timeout(1000)
+        .emitWithAck("startGame", { player, game });
+
+      if (res.status === "game_started") {
+        await game.startTimer(io, room);
+      }
       callback({ status: "ok" });
     }
   );
 
   socket.on(
     "moveRequest",
-    (
+    async (
       msgOffset: string,
       { player, col }: { player: string; col: number },
       callback
@@ -170,22 +180,29 @@ io.on("connection", async (socket) => {
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
-      const game = games.get(player);
+      const room = playerRooms.get(player) || "";
+      const game = games.get(room);
       if (!game)
         return callback({ status: "error", message: "game not found" });
       game.stopTimer();
-      socket.emit("evaluatingMove");
+      await io.to(room).timeout(1000).emitWithAck("evaluatingMove");
       console.log("move requested", player, col);
+      let res: { status: string };
       if (game.makeMove(col)) {
         //update the game state
-        socket.emit("update", { game });
+        res = (
+          await io.to(room).timeout(1000).emitWithAck("update", { game })
+        )[0];
       } else {
-        socket.emit("invalidMove");
+        res = (await io.to(room).timeout(1000).emitWithAck("invalidMove"))[0];
       }
-      game.switchPlayer(socket);
+
+      if (res.status === "state_updated") {
+        await game.switchPlayer(io, room);
+      }
       //if game is not over, start the timer
       if (!game.currentWinner && !game.isDraw) {
-        game.startTimer(socket);
+        await game.startTimer(io, room);
       }
 
       callback({ status: "ok" });
@@ -194,14 +211,18 @@ io.on("connection", async (socket) => {
 
   socket.on(
     "leave",
-    (msgOffset: string, { player }: { player: string }, callback) => {
+    async (msgOffset: string, { player }: { player: string }, callback) => {
       // check if message is new
       if (!isNewMessage(msgOffset))
         return callback({ status: "notmodified", message: "already joined" });
 
       console.log("user left", player);
-      games.delete(player);
-      socket.emit("endGame");
+      const room = playerRooms.get(player) || "";
+      playerRooms.delete(player);
+      games.delete(room);
+
+      //for pvp, configure 2 events later
+      await io.to(room).timeout(1000).emitWithAck("endGame");
       callback({ status: "ok" });
     }
   );

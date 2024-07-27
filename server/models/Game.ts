@@ -1,4 +1,4 @@
-import { Socket } from "socket.io";
+import { Socket, Server } from "socket.io";
 import BoundFunction from "../@types/BoundFunction.js";
 import GameMode from "../@types/GameMode.js";
 import Chain from "../@types/Chain.js";
@@ -41,23 +41,27 @@ abstract class Game {
     ];
   }
 
-  switchPlayer(socket: Socket) {
+  async switchPlayer(io: Server, room: string) {
     this.currentPlayer =
       this.currentPlayer === this.player1 ? this.player2 : this.player1;
     this.time = 30;
-    socket.emit("switchPlayer", {
+    await io.to(room).timeout(1000).emitWithAck("switchPlayer", {
       currentPlayer: this.currentPlayer,
       time: this.time,
     });
   }
 
-  startTimer(socket: Socket) {
-    this.#timer = setInterval(() => {
+  async startTimer(io: Server, room: string) {
+    this.#timer = setInterval(async () => {
+      console.log("timer", this.time);
       this.time--;
       if (this.time < 0) {
-        this.switchPlayer(socket);
+        await this.switchPlayer(io, room);
       } else {
-        socket.emit("timer", { time: this.time });
+        await io
+          .to(room)
+          .timeout(1000)
+          .emitWithAck("timer", { time: this.time });
       }
     }, 1000);
   }
