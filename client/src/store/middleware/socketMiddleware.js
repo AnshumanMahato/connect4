@@ -51,8 +51,9 @@ const socketMiddleware = () => {
             callback({ status: 'game_started' });
           });
 
-          socket.on('pauseGame', () => {
+          socket.on('pauseGame', (callback) => {
             store.dispatch(goToPause());
+            callback({ status: 'game_paused' });
           });
 
           socket.on('continueGame', (callback) => {
@@ -60,31 +61,36 @@ const socketMiddleware = () => {
             callback({ status: 'game_started' });
           });
 
-          socket.on('endGame', () => {
+          socket.on('endGame', (callback) => {
+            callback({ status: 'game_ended' });
             socket.disconnect();
             socket = null;
             store.dispatch(endGame());
           });
 
-          socket.on('timer', (data) => {
+          socket.on('timer', (data, callback) => {
             store.dispatch(updateTime(data.time));
+            callback({ status: 'time_updated' });
           });
 
-          socket.on('switchPlayer', (data) => {
+          socket.on('switchPlayer', (data, callback) => {
             store.dispatch(switchPlayer(data));
+            callback({ status: 'player_switched' });
           });
 
-          socket.on('evaluatingMove', () => {
+          socket.on('evaluatingMove', (callback) => {
             store.dispatch(startEvaluation());
+            callback({ status: 'evaluating_move' });
           });
 
-          socket.on('update', (data) => {
+          socket.on('update', (data, callback) => {
             store.dispatch(updateGameState(data.game));
-            // callback({ status: 'state_updated' });
+            callback({ status: 'state_updated' });
           });
 
-          socket.on('invalidMove', () => {
+          socket.on('invalidMove', (callback) => {
             store.dispatch(stopEvaluation());
+            callback({ status: 'invalid_move' });
           });
 
           socket.on('connect_error', (error) => {
