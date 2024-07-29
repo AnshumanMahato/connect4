@@ -20,8 +20,7 @@ export {
   goToRules,
   goToDifficulty,
   goToPause,
-  goToPvpModeMenu,
-  goToConnect,
+  goToPvpRooms,
   connectionError,
 } from './slices/navigationSlice';
 export {

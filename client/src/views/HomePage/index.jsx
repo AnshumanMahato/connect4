@@ -2,14 +2,8 @@ import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import MainMenu from '../../components/menus/MainMenu';
 import DifficultyMenu from '../../components/menus/DifficultyMenu';
-import {
-  CONNECT,
-  DIFFICULTY,
-  HOME,
-  PVP_MODE,
-} from '../../store/constants/navConatansts';
-import PvpModeMenu from '../../components/menus/PvpModeMenu';
-import ConnectMenu from '../../components/menus/ConnectMenu';
+import { DIFFICULTY, HOME, ROOMS } from '../../store/constants/navConatansts';
+import RoomsMenu from '../../components/menus/RoomsMenu';
 
 function HomePage() {
   const { current: currentPage } = useSelector((state) => state.navigation);
@@ -40,17 +34,8 @@ function HomePage() {
             key="difficulty-menu"
           />
         )}
-        {currentPage === PVP_MODE && (
-          <PvpModeMenu
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
-            transition={{ delay: 0.5, duration: 0.2 }}
-            key="pvp-mode-menu"
-          />
-        )}
-        {currentPage === CONNECT && (
-          <ConnectMenu
+        {currentPage === ROOMS && (
+          <RoomsMenu
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}

@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  CONNECT,
+  ROOMS,
   CONNECTING,
   CONNECTION_FAILED,
   DIFFICULTY,
   GAME,
   HOME,
   PAUSE,
-  PVP_MODE,
   RULES,
 } from '../constants/navConatansts';
 import { endGame, playGame, restartGame, startGame } from './gameSlice';
@@ -24,11 +23,8 @@ const navigationSlice = createSlice({
     goToDifficulty: (state) => {
       state.current = DIFFICULTY;
     },
-    goToPvpModeMenu: (state) => {
-      state.current = PVP_MODE;
-    },
-    goToConnect: (state) => {
-      state.current = CONNECT;
+    goToPvpRooms: (state) => {
+      state.current = ROOMS;
     },
     goToGame: (state) => {
       state.current = GAME;
@@ -65,8 +61,7 @@ export const {
   goToRules,
   goToDifficulty,
   goToPause,
-  goToPvpModeMenu,
-  goToConnect,
+  goToPvpRooms,
   connectionError,
 } = navigationSlice.actions;
 export default navigationSlice;
