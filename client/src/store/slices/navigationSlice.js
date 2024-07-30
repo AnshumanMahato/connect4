@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   ROOMS,
-  CONNECTING,
   CONNECTION_FAILED,
   DIFFICULTY,
   GAME,
   HOME,
   PAUSE,
   RULES,
+  NOTIFICATION,
 } from '../constants/navConatansts';
 import { endGame, playGame, restartGame, startGame } from './gameSlice';
 
@@ -15,6 +15,7 @@ const navigationSlice = createSlice({
   name: 'navigation',
   initialState: {
     current: HOME,
+    notification: null,
   },
   reducers: {
     goToHome: (state) => {
@@ -38,13 +39,27 @@ const navigationSlice = createSlice({
     goToRules: (state) => {
       state.current = RULES;
     },
+    notify: (state, action) => {
+      state.current = NOTIFICATION;
+      state.notification = action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(playGame, (state) => {
-      state.current = CONNECTING;
+      state.current = NOTIFICATION;
+      state.notification = {
+        title: 'CONNECTING',
+        message: 'Connecting to the server...',
+        type: 'info',
+      };
     });
     builder.addCase(restartGame, (state) => {
-      state.current = CONNECTING;
+      state.current = NOTIFICATION;
+      state.notification = {
+        title: 'CONNECTING',
+        message: 'Connecting to the server...',
+        type: 'info',
+      };
     });
     builder.addCase(startGame, (state) => {
       state.current = GAME;
@@ -63,5 +78,6 @@ export const {
   goToPause,
   goToPvpRooms,
   connectionError,
+  notify,
 } = navigationSlice.actions;
 export default navigationSlice;

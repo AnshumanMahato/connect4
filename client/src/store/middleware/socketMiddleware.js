@@ -1,9 +1,5 @@
 import io from 'socket.io-client';
-import {
-  connectionError,
-  goToGame,
-  goToPause,
-} from '../slices/navigationSlice';
+import { goToGame, goToPause, notify } from '../slices/navigationSlice';
 import {
   continueGame,
   endGame,
@@ -94,7 +90,17 @@ const socketMiddleware = () => {
           });
 
           socket.on('connect_error', (error) => {
-            store.dispatch(connectionError(error));
+            socket.disconnect();
+            socket = null;
+            store.dispatch(
+              notify({
+                title: 'CONNECTION FAILED',
+                message:
+                  'Failed to connect to the server. Please try again later.',
+                type: 'error',
+              })
+            );
+            console.log('Socket.IO connection error:', error);
           });
 
           socket.on('disconnect', () => {
@@ -140,7 +146,6 @@ const socketMiddleware = () => {
           socket.emit('leave', `${socket.id}-${msgOffset++}`, { player });
         }
         break;
-      // Example: Emitting an event in response to a Redux action
       case insertCounter.type:
         if (socket !== null) {
           const { player } = store.getState().game;

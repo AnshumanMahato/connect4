@@ -21,6 +21,7 @@ export {
   goToDifficulty,
   goToPause,
   goToPvpRooms,
+  notify,
   connectionError,
 } from './slices/navigationSlice';
 export {

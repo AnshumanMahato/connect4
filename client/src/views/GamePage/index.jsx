@@ -5,11 +5,7 @@ import GameFooter from '../../components/GameFooter';
 import GameNav from '../../components/GameNav';
 import ScoreCard from '../../components/ScoreCard';
 import PauseMenu from '../../components/menus/PauseMenu';
-import {
-  CONNECTING,
-  CONNECTION_FAILED,
-  PAUSE,
-} from '../../store/constants/navConatansts';
+import { NOTIFICATION, PAUSE } from '../../store/constants/navConatansts';
 import Notification from '../../components/Notification';
 import { goToHome } from '../../store';
 
@@ -20,10 +16,11 @@ function GamePage() {
     scoreP1,
     scoreP2,
     current: currentPage,
+    notification,
   } = useSelector((state) => {
     const { player1, player2, scoreP1, scoreP2 } = state.game;
-    const { current } = state.navigation;
-    return { player1, player2, scoreP1, scoreP2, current };
+    const { current, notification } = state.navigation;
+    return { player1, player2, scoreP1, scoreP2, current, notification };
   }, shallowEqual);
 
   const dispatch = useDispatch();
@@ -41,9 +38,7 @@ function GamePage() {
       <ScoreCard player={player2} score={scoreP2} />
       <GameFooter className="footer" />
       <AnimatePresence mode="wait">
-        {(currentPage === CONNECTING ||
-          currentPage === CONNECTION_FAILED ||
-          currentPage === PAUSE) && (
+        {(currentPage === NOTIFICATION || currentPage === PAUSE) && (
           <motion.div
             className="overlay"
             initial={{ opacity: 0 }}
@@ -51,29 +46,21 @@ function GamePage() {
             exit={{ opacity: 0 }}
             key="overlay"
           >
-            {currentPage === CONNECTING && (
+            {currentPage === NOTIFICATION && (
               <Notification
-                key="connecting"
-                title="CONNECTING"
+                key={notification.type}
+                title={notification.title}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.2 }}
+                onClose={
+                  notification.type === 'error'
+                    ? () => dispatch(goToHome())
+                    : null
+                }
               >
-                Connecting to the server...
-              </Notification>
-            )}
-            {currentPage === CONNECTION_FAILED && (
-              <Notification
-                key="connection-failed"
-                title="CONNECTION FAILED"
-                onClose={() => dispatch(goToHome())}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                Connection to the server failed. Please try again.
+                {notification.message}
               </Notification>
             )}
             {currentPage === PAUSE && (

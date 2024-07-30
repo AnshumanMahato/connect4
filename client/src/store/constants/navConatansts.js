@@ -5,4 +5,5 @@ export const GAME = 'game';
 export const PAUSE = 'game/pause';
 export const CONNECTING = 'game/connecting';
 export const CONNECTION_FAILED = 'game/connection-failed';
+export const NOTIFICATION = 'game/notification';
 export const RULES = 'rules';
